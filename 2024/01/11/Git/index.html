@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>Git-whenever</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="命令,Git,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.highlightAll();</script>
+
+	<meta name="generator" content="Hexo 6.3.0"></head>
+
+	<body>
+		<div class="header">
+	<div class="header-top" id="header-top">
+		<div class="h-left">
+			<a href="/">
+				<img src="/image/logo.png" alt="Quiet">
+
+			</a>
+			<div class="title">whenever的空间</div>
+		</div>
+		<div class="h-right">
+			<ul>
+				
+					
+							<li>
+								<a href="/">
+									主页
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/archives">
+									归档
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/categories">
+									分类
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/about">
+									关于
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+			</ul>
+		</div>
+		<div class="h-right-close">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+				<path fill="none" d="M0 0h24v24H0z" />
+				<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+			</svg>
+		</div>
+	</div>
+</div>
+<div class="sidebar">
+    <div class="topo">
+        <h2>whenever</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 66%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815);
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					right: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					right: "-100%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/命令">命令</a></li>
+            
+            <li><a href="/tags/Git">Git</a></li>
+            
+            
+        </ul>
+        
+        <h1>Git</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">whenever</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/学习/" target="_blank" >学习</a>
+                    
+                </div>
+                <p>2024-01-11 20:09:02</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <p>Git是目前世界上最先进的分布式版本控制软件，它是一个源码管理系统，便于多人协作。</p>
+<h2 id="版本控制"><a href="#版本控制" class="headerlink" title="版本控制"></a>版本控制</h2><h3 id="集中式与分布式"><a href="#集中式与分布式" class="headerlink" title="集中式与分布式"></a>集中式与分布式</h3><p>集中式（svn）：有一个单一集中管理的服务器，保存所有文件的修订版本，而协同工作的人们都通过客户端连到这台服务器。<br>svn每次存到都是差异，需要的硬盘空间会相对小一点，可是回滚的速度会很慢。</p>
+<ul>
+<li>优点：代码存放在单一的服务器上，便于项目的管理</li>
+<li>缺点：服务器宕机：员工写的代码得不到保障</li>
+</ul>
+<p>服务器挂了：整个项目历史记录都会丢失<br>分布式（git）：客户并不只提取最新版本的文件快照，而是把代码仓库完整地镜像下来。任何一处协同工作的服务器发生故障，时候可以用任何一个镜像的本地仓库恢复。即每次提取都是对代码仓库的完整备份。<br>      git每次存的都是项目的完整快照，需要的硬盘空间会相对大一点，但是通过Git团队的极致压缩，比svn大不了多少，但是回滚速度极快。</p>
+<hr>
+<h2 id="安装与初始化"><a href="#安装与初始化" class="headerlink" title="安装与初始化"></a>安装与初始化</h2><h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>下载安装包，点击下一步。<br>验证安装成功：<br>git –version</p>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><p>git config –global <a target="_blank" rel="noopener" href="http://user.name/">user.name</a> “xxx”<br>git config –global user.email <a href="mailto:xxx@example.com">xxx@example.com</a><br>git config –list</p>
+<hr>
+<h2 id="Git的底层概念（底层命令）"><a href="#Git的底层概念（底层命令）" class="headerlink" title="Git的底层概念（底层命令）"></a>Git的底层概念（底层命令）</h2><h3 id="区域"><a href="#区域" class="headerlink" title="区域"></a>区域</h3><p>工作区—&gt;暂存区—&gt;版本库</p>
+<ul>
+<li>工作区：项目下的所有文件，代码。</li>
+<li>暂存区：工作区修改后进入暂存区。</li>
+<li>版本库：暂存区累计到一定程度可以生成一个新版本。</li>
+</ul>
+<h3 id="初始化新仓库"><a href="#初始化新仓库" class="headerlink" title="初始化新仓库"></a>初始化新仓库</h3><h4 id="命令：git-init"><a href="#命令：git-init" class="headerlink" title="命令：git init"></a>命令：git init</h4><p>要对现有的某个项目开始用git管理，只需到此项目所在的目录，执行该命令。<br>初始化后，在当前目录下会出现一个名为.git的目录，所有git需要的数据和资料都存放在这个目录中。</p>
+<h4 id="git目录"><a href="#git目录" class="headerlink" title="git目录"></a>git目录</h4><p><strong>hooks</strong> 目录包含客户端或服务端的钩子脚本，以后在提交代码之前做的东西放在钩子里面做。钩子相当回调函数，保证提交的东西符合规范。<br><strong>info</strong> 包含一个全局性排除文件，哪些文件git不需要管理的放在info里面。<br><strong>logs</strong> 保存日志信息。<br><strong>objects</strong> 目录存储所有数据内容，相当于数据库。<br><strong>refs</strong> 目录存储指向数据（分支）的提交对象的指针。<br><strong>config</strong> 文件包含项目特有的配置选项。<br><strong>description</strong> 用来显示对仓库的描述信息。<br><strong>HEAD</strong> 文件指示目前被检出的分支。<br><strong>index</strong> 文件保存暂存区信息。</p>
+<h3 id="对象"><a href="#对象" class="headerlink" title="对象"></a>对象</h3><h4 id="Git对象"><a href="#Git对象" class="headerlink" title="Git对象"></a>Git对象</h4><p>git的核心部分是一个简单的键值对数据库。你可以向改数据库插入任意类型的内容，它会返回一个键值，通过该键值可以在任意时刻再次检索该内容。<br>key:val 组成的键值对（key是val 对应的hash)<br>  键值对在git内部的一个blob类型。不管是存入一个文件还是控制台内容，存入git仓库的都是一个git对象，即都是blob类型。</p>
+<ol>
+<li>向数据库写入内容，并返回对应键值命令：<ol>
+<li>echo “test content” | git hash-object -w -stdin</li>
+</ol>
+</li>
+</ol>
+<p>-w 指示hash-object命令存储数据对象；若不指定此选项，则该命令仅返回对应的键值<br>-stdin 指示该命令从标准输入读取内容；若不指定此选项，则须在命令尾部给出待存储文件的路径<br>test content就是写入文件的内容</p>
+<ol start="2">
+<li>git hash-object -w 文件路径<br>存文件</li>
+<li>git hash-object 文件路径<br>返回文件对应键值</li>
+<li>查看Git是如何存储数据的命令：find .git&#x2F;objects -type fgit存储内容的方式：一个文件对应一条内容。校验和的前两个字符用于命名子目录，余下的38个字符则用作文件名。</li>
+<li>根据键值拉取数据</li>
+</ol>
+<p>命令：git cat-file -p d6704….(校验和)<br>   -p指示该命令自动判断内容的类型，并为我们显示格式友好的内容。<br>  返回：test content</p>
+<ol start="4">
+<li>对一个文件进行简单的版本控制<ol>
+<li>创建一个新文件并将其内容存入数据库中<br>echo “version 1” &gt; test.txt<br>控制台输出内容”version 1“写入文件test.txt。生成了一个文件，但还没交给git管理<br>git hash-object -w .&#x2F;test.txt<br>保存文件</li>
+<li>向文件里面写入新内容，并再次将其写入数据库：<br>vim test.txt<br>向其中添加一行内容 version 2 ，wq保存，此时只修改了文件内容，并未提交存入数据库。<br>git hash-object -w test.txt</li>
+<li>查看数据库内容<br>find .git&#x2F;objects -type f<br>列出objects文件夹中的所有对象，包括git对象，树对象<br>git cat-file -p xxx…</li>
+</ol>
+</li>
+</ol>
+<p>问题：</p>
+<ul>
+<li>git对象只能存储，不能代表一个版本。</li>
+<li>记住文件的每一个版本对应的hash值并不现实</li>
+<li>在git中，我们只保存了文件内容，并没有保存文件名</li>
+</ul>
+<p>解决方案：树对象<br><strong>注意</strong>：当前的操作都是在对本地数据库进行操作，不涉及暂存区。</p>
+<h4 id="树对象"><a href="#树对象" class="headerlink" title="树对象"></a>树对象</h4><p>树对象（tree object)，它能解决文件名保存的问题，也允许我们将多个文件组织到一起。Git以一种类似于UNIX文件系统的方式存储内容。所有内容均以树对象和数据对象（git对象）的形式存储，其中树对象对应了UNIX中的目录项，数据对象（git对象）则大致上对应文件内容。一个树对象包含了一条或多条记录，一个树对象也可以包含另一个对象。</p>
+<ol>
+<li>查看暂存区当前的样子<br>git ls-files -s</li>
+<li>查看树对象<br>git cat-file -p master^{tree}（或者是树对象的hash）<br>master^{tree}语法表示master分支上最新的提交所指向的树对象。</li>
+<li>构建树对象<ol>
+<li>利用update-index命令为test.txt文件的首个版本创建一个暂存区。并通过write-tree命令生成树对象。git update-index –add –cacheinfo 10064\ 83baae…xx test.txt<br>git write-tree<br>文件模式为 100644，表明这是一个普通文件<br> 100755，表示一个可执行文件<br> 120000，表示一个符号链接</li>
+</ol>
+</li>
+</ol>
+<p>–add 因为此前该文件并不存在暂存区中，首次需要add<br>–cacheinfo 因为要添加的文件位于Git数据库中，而不是位于当前目录下</p>
+<ol start="2">
+<li>新增new.txt，将new.txt和test.txt文件的第二个版本塞入暂存区。并通过write-tree命令生成树对象。echo “new file v1” &gt; new.txt<br>git update-index –cacheinfo 10064\ 1f7a7a…xx test.txt<br>将test.txt文件的第二个版本放入暂存区：<br>git update-index –add new.txt<br>会直接执行生成new.txt的git对象，然后放入暂存区，合并了两步，属于高层命令。<br>git wtrite-tree</li>
+<li>将第一个树对象加入第二个树对象，使其成为新的树对象<br>git read-tree -prefix&#x3D;bak d8329f…xx(第一个树对象的hash)<br>read-tree命令，把树对象读入暂存区。<br>git write-tree</li>
+</ol>
+<p>结果图示：<br><img src="https://cdn.nlark.com/yuque/0/2024/png/42369922/1704869263019-60ed23d4-e4e0-40be-9861-fdc6cf1f7d6d.png#averageHue=%23efeae4&clientId=u75b32cc1-765e-4&from=paste&id=u88c60f3a&originHeight=357&originWidth=508&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u7f295401-1503-4dd1-943e-428bd2899c0&title="><br><strong>解析树对象</strong><br>Git 根据某一时刻暂存区（即 index 区域）所表示的状态创建并记录 一个对应的树对象，如此重复便可依次记录（某个时间段内）一系列的树对象。<br>其实树对象是对暂存区内操作的抽象，这颗树对象相对于就是快照。当我 们的工作区有任何更改同步到暂存区时。便会调用 write-tree 命令<br>通过 write-tree 命令向暂存区内容写入一个树对象。它会根据当前 暂存区状态自动创建一个新的树对象。即每一次同步都产生一颗树对象。且该命令会返回一个 hash 指向树对象。<br>在 Git 中每一个文件（数据）都对应一个 hash（类型 blob） 每一个树对象都对应一个 hash（类型 tree）<br>_总结_：我们可以认为树对象就是我们项目的快照</p>
+<h4 id="提交对象"><a href="#提交对象" class="headerlink" title="提交对象"></a>提交对象</h4><p>我们可以通过调用 commit-tree 命令创建一个提交对象，为此需要指定一个树对象的hash值，以及该提交的父提交对象（如果有的话 第一次将暂存区做快照就没有父对象）</p>
+<ol>
+<li>创建提交对象<br>echo ‘first commit’ | git commit-tree d8329f<br>返回： fdf4fc3344e67ab068f836878b6c4951e3b15f3dd8329f是第一棵树的树对象，结果就是提交后的对象</li>
+<li>查看提交对象<br>git cat-file -p fdf4fc3<br>返回： tree d8329fc1cc938780ffdd9f94e0d364e0ea74f579</li>
+</ol>
+<p>提交对象的格式 提交对象的格式很简单：<br> 它先指定一个顶层树对象，代表当前项目快照；然后是作者&#x2F;提交者信息（依 据你的user.name和 user.email 配置来设定，外加一个时间戳）；留空 一行，最后是提交注释</p>
+<ol start="3">
+<li>接着，我们将创建另两个提交对象，它们分别引用各自的上一个提交（作为其父提交对象）：<br>echo ‘second commit’ | git commit-tree 0155eb -p fdf4fc3 cac0cab538b970a37ea1e769cbbde608743bc96d0155eb<br>是第二次提交的对象，即为第二棵树的树对象，fdf4fc3是第一次提交成功后生成的提交对象，-p说明第一次是第二次的父对象<br>echo ‘third commit’ | git commit-tree 3c4e9c -p cac0cab 1a410efbd13591db07496601ebc7a059dd55cfe93c4e9c<br>是第三棵树的树对象，cac0cab是第二次提交生成的提交对象</li>
+</ol>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/42369922/1704869263188-eea42e53-a9cd-43c7-9bea-a6ef3535af4a.png#averageHue=%23e1c885&clientId=u75b32cc1-765e-4&from=paste&id=ueaaaa6f8&originHeight=430&originWidth=620&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u72ac791f-694d-4bb4-9b65-b0b42346065&title="><br>_总结_：本质上项目的版本就是一个提交对象，项目的快照就是一个树对象。</p>
+<h2 id="Git的本地操作（高层命令）"><a href="#Git的本地操作（高层命令）" class="headerlink" title="Git的本地操作（高层命令）"></a>Git的本地操作（高层命令）</h2><h3 id="git操作最基本的流程"><a href="#git操作最基本的流程" class="headerlink" title="git操作最基本的流程"></a>git操作最基本的流程</h3><p>创建工作目录，对工作目录进行修改</p>
+<ol>
+<li>git add 工作目录<br>这条命令实际上执行了很多条底层命令，包括：git hash-object -w 文件名（修改了多少个工作目录中的文件，此命令就被执行多少次，就会生成多少个git对象）git update-index … （放入暂存区）</li>
+<li>git commit -m “注释内容”<br>这条命令实际上也执行了很多条底层命令，包括：git write-tree（生成树对象）git commit-tree … （生成提交对象）</li>
+</ol>
+<h3 id="git高层命令"><a href="#git高层命令" class="headerlink" title="git高层命令"></a>git高层命令</h3><p>git init 初始化仓库<br>git add . 将修改添加到暂存区<br>git status 查看当前文件状态（已跟踪或未跟踪）<br>git commit 直接执行此命令会进入编辑模式进行提交<br>git commit -m “注释内容” 将暂存区代码提交到仓库<br>git commit -a 执行此命令git会自动将文件添加到暂存区并提交 （会进入编辑模式）<br>git diff 查看做了哪些更新还没有暂存<br>git diff –cached &#x2F; git diff –staged 查看做了哪些更新已经暂存还未提交<br>git log 普通的平铺展示提交的历史记录<br>git log –oneline 极简版展示提交的历史记录</p>
+<h3 id="具体使用"><a href="#具体使用" class="headerlink" title="具体使用"></a>具体使用</h3><p>在编写代码前，应该先git pull拉取远程仓库中的代码，然后npm i下载新的依赖。<br>如果要拉取某个分支的代码，则 git pull origin 分支名称<br>在需要提交新的代码时，先git add 文件相对位置，将新修改的文件加入暂存区，然后git status查看文件的状态，然后git commit -m 注释（修改文件名：相应操作）提交到本地仓库，最后git push提交到远程仓库。<br>新建分支是git branch 分支名<br>合并分支是git rebase 要合并的分支名</p>
+<h3 id="建立本地仓库"><a href="#建立本地仓库" class="headerlink" title="建立本地仓库"></a>建立本地仓库</h3><p>再来复习一下创建新仓库的指令：</p>
+<pre><code class="bash">git init //把这个目录变成Git可以管理的仓库
+git add [README.md](http://README.md) //文件添加到仓库
+git add . //不但可以跟单一文件，还可以跟通配符，更可以跟目录。一个点就把当前目录下所有未追踪的文件全部add了 
+git commit -m &quot;first commit&quot; //把文件提交到仓库
+git remote add origin [git@github.com](mailto:git@github.com):wangjiax9/practice.git //关联远程仓库
+git push -u origin master //把本地库的所有内容推送到远程库上
+</code></pre>
+<p>首先，进入到wyj_first项目目录，还记得创建仓库成功后的那个页面吧，指令都在呢。<br>然后执行指令： git init<br><img src="https://cdn.nlark.com/yuque/0/2024/webp/42369922/1704869262647-c29d911c-347b-45f9-883c-fb742b75e3d1.webp#averageHue=%232d2f22&clientId=u75b32cc1-765e-4&from=paste&id=u54f69743&originHeight=176&originWidth=497&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=ufa184a29-4938-470a-a218-7f027662aad&title="><br>初始化成功后你会发现项目里多了一个隐藏文件夹.git<br>这个目录是Git用来跟踪管理版本库的，没事千万不要手动修改这个目录里面的文件，不然改乱了，就把Git仓库给破坏了。<br><img src="https://cdn.nlark.com/yuque/0/2024/webp/42369922/1704869262661-83f34aba-292c-4c3e-bbb7-615deb2015ce.webp#averageHue=%23e8e8e2&clientId=u75b32cc1-765e-4&from=paste&id=u4660ecdd&originHeight=205&originWidth=398&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u204a9cbe-324a-4ecb-83f3-42d60ed963a&title="><br>接着，将所有文件添加到仓库<br>执行指令： git add .<br><img src="https://cdn.nlark.com/yuque/0/2024/png/42369922/1704869262655-428acb09-9278-41bc-ba1f-0ab01b8dead0.png#averageHue=%23020100&clientId=u75b32cc1-765e-4&from=paste&id=ue339c7b9&originHeight=47&originWidth=433&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=ufce42d4f-1be0-4d35-81b2-3b80eccae35&title="><br>然后，把文件提交到仓库，双引号内是提交注释。<br>执行指令： git commit -m “提交文件”<br><img src="https://cdn.nlark.com/yuque/0/2024/webp/42369922/1704869262969-ab4d6234-b9da-4c23-9b12-6ea2eccc8312.webp#averageHue=%232c2f22&clientId=u75b32cc1-765e-4&from=paste&id=u2b2430a8&originHeight=160&originWidth=448&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u114fce1c-015a-4d6d-b5a8-27000029959&title="><br>如此本地仓库建立好了。</p>
+<h4 id="关联github仓库"><a href="#关联github仓库" class="headerlink" title="关联github仓库"></a>关联github仓库</h4><p>到github wyj_first仓库复制仓库地址<br><img src="https://cdn.nlark.com/yuque/0/2024/webp/42369922/1704869263081-6e7e2dc4-88dd-4222-8216-9261c75cd906.webp#averageHue=%23eff4f7&clientId=u75b32cc1-765e-4&from=paste&id=ub8fe31fb&originHeight=177&originWidth=720&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=uf8fa07ae-dcf6-4587-8e21-14f9d8132be&title="><br>然后执行指令：  git remote add origin <a href="mailto:&#x67;&#x69;&#x74;&#64;&#x67;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#99;&#x6f;&#109;">&#x67;&#x69;&#x74;&#64;&#x67;&#x69;&#x74;&#104;&#117;&#x62;&#46;&#99;&#x6f;&#109;</a>:gain-wyj&#x2F;wyj_first.git<br><img src="https://cdn.nlark.com/yuque/0/2024/webp/42369922/1704869263106-57a41863-3c8e-4069-90ce-795612b0ca9b.webp#averageHue=%231b2614&clientId=u75b32cc1-765e-4&from=paste&id=u7a59824b&originHeight=80&originWidth=452&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=ue175df39-3fd0-4f07-8f97-3df71a8941f&title="><br>如果你clone下来一个别人的仓库，在此基础上完成你的代码，推送到自己的仓库可能遇到如下问题： error: remote origin already exists.表示远程仓库已存在。 因此你要进行以下操作： 1、先输入git remote rm origin 删除关联的origin的远程库 2、关联自己的仓库 git remote add origin <a target="_blank" rel="noopener" href="https://gitee.com/xxxxxx.git">https://gitee.com/xxxxxx.git</a> 3、最后git push origin master，这样就推送到自己的仓库了。</p>
+<h4 id="上传本地代码"><a href="#上传本地代码" class="headerlink" title="上传本地代码"></a>上传本地代码</h4><p>执行指令： git push -u origin master<br>1）敲一个：yes， 然后回车<br><img src="https://cdn.nlark.com/yuque/0/2024/webp/42369922/1704869263230-de73092a-fa6b-4496-a852-8007ba3cc165.webp#averageHue=%23252a1f&clientId=u75b32cc1-765e-4&from=paste&id=u1a528632&originHeight=260&originWidth=612&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u1a89250e-5453-47da-818e-c9db8867547&title="><br>到此，本地代码已经推送到github仓库了，我们现在去githubt仓库看看。<br><img src="https://cdn.nlark.com/yuque/0/2024/webp/42369922/1704869263412-ee7f749a-78b8-4a5b-b89f-8d5e8b489d5e.webp#averageHue=%23d0e7bd&clientId=u75b32cc1-765e-4&from=paste&id=u3c5ef411&originHeight=363&originWidth=720&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u81a960b6-b918-42e7-9cfd-453e89f53e5&title="></p>
+
+  </div>
+  <div id=""></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2024/01/11/Linux%E7%BB%88%E6%AD%A2%EF%BC%8C%E6%8C%82%E8%B5%B7%EF%BC%8C%E8%BF%90%E8%A1%8C/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>Linux终止，挂起，运行</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2024/01/11/%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>第一篇博客</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		<div class="footer">
+	<div class="Copyright">
+		©2024 主题：<a
+				style="text-decoration: none;display: contents; color: #898F9F;">Quiet</a>
+	</div>
+	<div class="contact">
+		
+			<a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+				<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+			</a>
+			
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+	
+		
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        
+        if(Boolean('false')){
+            gitalk.render('gitalk-container')
+        }
+    </script>
+
+	</body>
+</html>
+

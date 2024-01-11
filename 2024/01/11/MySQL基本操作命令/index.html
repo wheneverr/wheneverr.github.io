@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>MySQL基本操作命令-whenever</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="命令,MySQL,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.highlightAll();</script>
+
+	<meta name="generator" content="Hexo 6.3.0"></head>
+
+	<body>
+		<div class="header">
+	<div class="header-top" id="header-top">
+		<div class="h-left">
+			<a href="/">
+				<img src="/image/logo.png" alt="Quiet">
+
+			</a>
+			<div class="title">whenever的空间</div>
+		</div>
+		<div class="h-right">
+			<ul>
+				
+					
+							<li>
+								<a href="/">
+									主页
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/archives">
+									归档
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/categories">
+									分类
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/about">
+									关于
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+			</ul>
+		</div>
+		<div class="h-right-close">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+				<path fill="none" d="M0 0h24v24H0z" />
+				<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+			</svg>
+		</div>
+	</div>
+</div>
+<div class="sidebar">
+    <div class="topo">
+        <h2>whenever</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 66%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815);
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					right: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					right: "-100%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/命令">命令</a></li>
+            
+            <li><a href="/tags/MySQL">MySQL</a></li>
+            
+            
+        </ul>
+        
+        <h1>MySQL基本操作命令</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">whenever</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/学习/" target="_blank" >学习</a>
+                    
+                </div>
+                <p>2024-01-11 20:16:59</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <p><strong>MySQL基本操作命令</strong></p>
+<h2 id="1、mysql服务的启动和停止"><a href="#1、mysql服务的启动和停止" class="headerlink" title="1、mysql服务的启动和停止"></a>1、mysql服务的启动和停止</h2><p>net stop mysql<br>net start mysql<br>启动失败可按快捷键 win+R，输入 services.msc，找到MySQL服务器的名称启动</p>
+<h2 id="2、登陆mysql"><a href="#2、登陆mysql" class="headerlink" title="2、登陆mysql"></a>2、登陆mysql</h2><p>mysql （-h）-u 用户名 -p<br>注意，如果是连接到另外的机器上，则需要加入一个参数-h机器IP<br>键入命令mysql -u root -p， 回车后提示你输入密码，然后回车即可进入到mysql中了</p>
+<h2 id="3、增加新用户"><a href="#3、增加新用户" class="headerlink" title="3、增加新用户"></a>3、增加新用户</h2><p>grant 权限 on 数据库.* to 用户名@登录主机 identified by “密码”<br>例：增加一个用户user密码为password，让其可以在本机上登录， 并对所有数据库有查询、插入、修改、删除的权限。首先用以root用户连入mysql，然后键入以下命令：<br>grant select,insert,update,delete on <em>.</em> to user@localhost Identified by “password”;<br>如果希望该用户能够在任何机器上登陆mysql，则将localhost改为”%”。</p>
+<h2 id="4、-操作数据库"><a href="#4、-操作数据库" class="headerlink" title="4、 操作数据库"></a>4、 操作数据库</h2><p>登录到mysql中，然后在mysql的提示符下运行下列命令，每个命令以分号结束。<br>选择你所创建的数据库<br>use 数据库名<br>导入.sql文件命令(例D:&#x2F;mysql.sql):<br>mysql&gt;use 数据库名;<br>mysql&gt;source d:&#x2F;mysql.sql;</p>
+<h3 id="Ⅰ、-显示数据库列表"><a href="#Ⅰ、-显示数据库列表" class="headerlink" title="Ⅰ、 显示数据库列表"></a>Ⅰ、 显示数据库列表</h3><p>show databases;<br>缺省有两个数据库：mysql和test。 mysql库存放着mysql的系统和用户权限信息，我们改密码和新增用户，实际上就是对这个库进行操作。</p>
+<h3 id="Ⅱ、-显示库中的数据表"><a href="#Ⅱ、-显示库中的数据表" class="headerlink" title="Ⅱ、 显示库中的数据表"></a>Ⅱ、 显示库中的数据表</h3><p>use 库名;<br>show tables;</p>
+<h3 id="Ⅲ、-显示数据表的结构"><a href="#Ⅲ、-显示数据表的结构" class="headerlink" title="Ⅲ、 显示数据表的结构"></a>Ⅲ、 显示数据表的结构</h3><p>describe 表名;</p>
+<h3 id="Ⅳ、-建库与删库"><a href="#Ⅳ、-建库与删库" class="headerlink" title="Ⅳ、 建库与删库"></a>Ⅳ、 建库与删库</h3><p>create database 库名（character set utf8）;<br>drop database 库名;</p>
+<h3 id="Ⅴ、-建表与删表"><a href="#Ⅴ、-建表与删表" class="headerlink" title="Ⅴ、 建表与删表"></a>Ⅴ、 建表与删表</h3><p>use 库名;<br>create table 表名(字段列表);<br>drop table 表名;</p>
+<h3 id="Ⅵ、-清空表中记录"><a href="#Ⅵ、-清空表中记录" class="headerlink" title="Ⅵ、 清空表中记录"></a>Ⅵ、 清空表中记录</h3><p>delete from 表名;</p>
+<h3 id="Ⅶ、-显示表中的记录"><a href="#Ⅶ、-显示表中的记录" class="headerlink" title="Ⅶ、 显示表中的记录"></a>Ⅶ、 显示表中的记录</h3><p>select * from 表名;</p>
+<h3 id="Ⅷ、-往表中加入记录"><a href="#Ⅷ、-往表中加入记录" class="headerlink" title="Ⅷ、 往表中加入记录"></a>Ⅷ、 往表中加入记录</h3><p>insert into 表名 values (字段列表);</p>
+<h3 id="Ⅹ、更新表中数据"><a href="#Ⅹ、更新表中数据" class="headerlink" title="Ⅹ、更新表中数据"></a>Ⅹ、更新表中数据</h3><p>mysql&gt;update 表名 set 字段&#x3D;”值” where 子句 order by 子句 limit 子句<br>WHERE 子句：可选项。用于限定表中要修改的行。若不指定，则修改表中所有的行。<br>ORDER BY 子句：可选项。用于限定表中的行被修改的次序。<br>LIMIT 子句：可选项。用于限定被修改的行数。</p>
+<h2 id="5、导出和导入数据"><a href="#5、导出和导入数据" class="headerlink" title="5、导出和导入数据"></a>5、导出和导入数据</h2><h3 id="Ⅰ-导出数据"><a href="#Ⅰ-导出数据" class="headerlink" title="Ⅰ. 导出数据"></a>Ⅰ. 导出数据</h3><p>mysqldump –opt test &gt; mysql.test<br>即将数据库test数据库导出到mysql.test文本文件<br>例：mysqldump -u root -p用户密码 –databases dbname &gt; mysql.dbname</p>
+<h3 id="Ⅱ-导入数据"><a href="#Ⅱ-导入数据" class="headerlink" title="Ⅱ. 导入数据"></a>Ⅱ. 导入数据</h3><p>mysqlimport -u root -p用户密码 &lt; mysql.dbname。</p>
+<h3 id="Ⅲ-将文本数据导入数据库"><a href="#Ⅲ-将文本数据导入数据库" class="headerlink" title="Ⅲ. 将文本数据导入数据库"></a>Ⅲ. 将文本数据导入数据库</h3><p>文本数据的字段数据之间用tab键隔开。<br>use test;<br>load data local infile “文件名” into table 表名;</p>
+<h2 id="6、退出MYSQL命令"><a href="#6、退出MYSQL命令" class="headerlink" title="6、退出MYSQL命令"></a>6、退出MYSQL命令</h2><p>exit (回车)</p>
+<h4 id="①-创建数据库"><a href="#①-创建数据库" class="headerlink" title="①.创建数据库"></a>①.创建数据库</h4><ul>
+<li>基本语法：<br>create database 数据库名称；<br>特别注意：在mysql中，当一条SQL语句编写完毕后，一定要使用分号；进行结尾，否则系统认为这条语句还没有结束。</li>
+<li>创建数据库代db1，并同时指定编码格式<br>create database db1 default charset&#x3D;utf8；</li>
+<li>如果存在不报错（if not exists）<br>create database if not exists db1 default charset&#x3D;utf8；<br>说明：不能创建相同名字的数据库！</li>
+<li>扩展：编码格式：常见的gbk（中国的编码格式）与utf8（国际通用编码格式），后来5.6版本以后又进行了升级utf8mb4</li>
+</ul>
+<h4 id="②-查询已创建数据库"><a href="#②-查询已创建数据库" class="headerlink" title="②.查询已创建数据库"></a>②.查询已创建数据库</h4><ul>
+<li><p>基本语法：</p>
+</li>
+<li><p>显示所有数据库：<br>show databases；</p>
+</li>
+<li><p>显示某个数据库的数据结构：<br>show create database 数据库名称；</p>
+</li>
+</ul>
+<h4 id="③-修改数据库信息"><a href="#③-修改数据库信息" class="headerlink" title="③.修改数据库信息"></a>③.修改数据库信息</h4><p><strong>|</strong> 在MySQL5以后的版本中，MySQL不支持更改数据库的名称。我们所谓的修改数据库主要修改的是数据库的编码格式</p>
+<ul>
+<li>基本语法：</li>
+<li>alter database数据库名称 default charset&#x3D;新的编码格式；</li>
+</ul>
+<h4 id="④-删除数据库"><a href="#④-删除数据库" class="headerlink" title="④.删除数据库"></a>④.删除数据库</h4><ul>
+<li>基本语法：<br>drop database 数据库名称；</li>
+</ul>
+<h3 id="3-数据表的基本操作"><a href="#3-数据表的基本操作" class="headerlink" title="3.数据表的基本操作"></a>3.数据表的基本操作</h3><h4 id="①-数据表的创建"><a href="#①-数据表的创建" class="headerlink" title="①.数据表的创建"></a>①.数据表的创建</h4><ul>
+<li>基本语法：<br>create table 数据表名称（<br>字段1 字段类型 [字段约束]，<br>字段2 字段类型 [字段约束]，<br>…<br>）；</li>
+<li>案例：创建一个admin管理员表，拥有三个字段（编号，用户名称，用户密码）</li>
+</ul>
+<p>mysql&gt; use 数据库名称;   #use在MySQL中的含义代表选择，use数据库名称相当于选择指定的数据库<br>mysql&gt; create table tb_admin(<br>id tinyint,<br>username varchar(20),<br>password char(32)<br>) engine&#x3D;innodb default charset&#x3D;utf8;;</p>
+<ul>
+<li><p>tinyint:微整型，范围-128 ~ 127，无符号型，则表示0 ~ 255</p>
+</li>
+<li><p>表示字符串类型可以使用char与varchar，char代表固定长度的字段，varchar代表变化长度的字段</p>
+</li>
+<li><p>text：文本类型，一般情况下，用varchar存储不了的字符串信息，都建议使用text文本进行处理</p>
+</li>
+</ul>
+<h4 id="②-查询已创建数据表"><a href="#②-查询已创建数据表" class="headerlink" title="②.查询已创建数据表"></a>②.查询已创建数据表</h4><p>mysql&gt; use 数据库名称;<br>mysql&gt; show tables   #显示所有数据表（当前数据库）</p>
+<h1 id="显示数据表的创建过程（编码格式，字段等等信息）"><a href="#显示数据表的创建过程（编码格式，字段等等信息）" class="headerlink" title="显示数据表的创建过程（编码格式，字段等等信息）"></a>显示数据表的创建过程（编码格式，字段等等信息）</h1><p>mysql&gt; show create table 数据表名称;<br>或<br>mysql&gt; desc 数据表名称;</p>
+<h4 id="③-修改数据表信息"><a href="#③-修改数据表信息" class="headerlink" title="③.修改数据表信息"></a>③.修改数据表信息</h4><h4 id="1-数据表字段添加"><a href="#1-数据表字段添加" class="headerlink" title="1).数据表字段添加"></a>1).数据表字段添加</h4><ul>
+<li><p>数据表字段添加：</p>
+</li>
+<li><p>基本语法：</p>
+</li>
+</ul>
+<p>mysql&gt; alter table 数据表名称 add 新字段名称 字段类型 first|after 其他字段名称;</p>
+<ul>
+<li>选项说明：<br>first：把新添加的字段放在第一位<br>after 字段名称：把新添加字段放在指定字段的后面</li>
+</ul>
+<h4 id="2-修改字段名称或字段类型"><a href="#2-修改字段名称或字段类型" class="headerlink" title="2).修改字段名称或字段类型"></a>2).修改字段名称或字段类型</h4><ul>
+<li>修改字段名称与字段类型（也可以只修改名称）</li>
+</ul>
+<p>mysql&gt; alter table 数据表名称 change 旧字段名 新字段名 类型;</p>
+<ul>
+<li>仅修改字段的类型</li>
+</ul>
+<p>mysql&gt; alter table 数据表名称 modify 字段名 类型;</p>
+<h4 id="3-删除某个字段"><a href="#3-删除某个字段" class="headerlink" title="3).删除某个字段"></a>3).删除某个字段</h4><p>mysql&gt; alter table 数据表名称 drop 字段名称;</p>
+<h4 id="4-修改数据表引擎-MyISAM或InnoDB"><a href="#4-修改数据表引擎-MyISAM或InnoDB" class="headerlink" title="4).修改数据表引擎(MyISAM或InnoDB)"></a>4).修改数据表引擎(MyISAM或InnoDB)</h4><p>mysql&gt; alter table 数据表名称 engine&#x3D;myisam;</p>
+<h4 id="5-修改数据表的编码格式"><a href="#5-修改数据表的编码格式" class="headerlink" title="5).修改数据表的编码格式"></a>5).修改数据表的编码格式</h4><p>mysql&gt; alter table 数据表名称 default charset&#x3D;gbk;</p>
+<h4 id="6-修改数据表名称"><a href="#6-修改数据表名称" class="headerlink" title="6).修改数据表名称"></a>6).修改数据表名称</h4><p>mysql&gt; rename table 旧数据表名称 to 新数据表名称;<br>或<br>mysql&gt; alter table 旧数据表名称 rename 新数据表名称;<br>扩展：重命名的同时移动数据表到指定的数据库<br>mysql&gt; rename table 数据库名称.旧数据表名 to 另一个数据库名称.新数据表名;</p>
+<h4 id="④-删除数据表"><a href="#④-删除数据表" class="headerlink" title="④.删除数据表"></a>④.删除数据表</h4><p>mysql&gt; drop table 数据表名称;</p>
+<h3 id="4-数据的增删改查（重点）"><a href="#4-数据的增删改查（重点）" class="headerlink" title="4.数据的增删改查（重点）"></a>4.数据的增删改查（重点）</h3><h4 id="①-数据的增加操作"><a href="#①-数据的增加操作" class="headerlink" title="①.数据的增加操作"></a>①.数据的增加操作</h4><ul>
+<li>基本语法：</li>
+</ul>
+<p>mysql&gt; insert into 数据表名称([字段1,字段2,字段3…]) values (字段1的值,字段2的值,字段3的值…..);<br><strong>|</strong> 特别注意：在SQL语句中，除了数字，其他类型的值都需要使用引号引起来，否则插入时会报错<br><strong>|</strong> 第一步：准备一个数据表<br><strong>|</strong> 第二步：使用insert语句插入数据</p>
+<h4 id="②-数据的查询操作"><a href="#②-数据的查询操作" class="headerlink" title="②.数据的查询操作"></a>②.数据的查询操作</h4><ul>
+<li>基本语法：</li>
+</ul>
+<p>mysql&gt; select *from 数据表名称 [where 查询条件];  #*代表查询所有字段，也可以只查询某些字段<br>mysql&gt; select id,username from 数据表名称 [where 查询条件];<br><strong>|</strong> 只查询id&#x3D;2的小伙伴信息<br><strong>|</strong> 查询年龄大于17岁的小伙伴的信息</p>
+<h4 id="③-数据的修改操作"><a href="#③-数据的修改操作" class="headerlink" title="③.数据的修改操作"></a>③.数据的修改操作</h4><ul>
+<li>基本语法：</li>
+</ul>
+<p>mysql&gt; update 数据表名称 set 字段1&#x3D;更新后的值，字段2&#x3D;更新后的值,….where 更新条件;<br><strong>|</strong> 特别说明：如果在更新数据时，不指定更新条件，则会把这个数据表的所有记录全部更新一遍</p>
+<ul>
+<li>案例：修改’username&#x3D;小鹿’这条记录，将其年龄更新为22岁，家庭住址更新为广东省广州市</li>
+</ul>
+<p>mysql&gt; update tb_user set age&#x3D;22,address&#x3D;’广东省广州市’ where username&#x3D;’小鹿’;</p>
+<ul>
+<li>案例：过了一年，每个人的年龄都增加了一岁</li>
+</ul>
+<p>mysql&gt; update db_user set age&#x3D;age+1;</p>
+<h4 id="④-数据的删除操作"><a href="#④-数据的删除操作" class="headerlink" title="④.数据的删除操作"></a>④.数据的删除操作</h4><ul>
+<li>基本语法：</li>
+</ul>
+<p>mysql&gt; delete from 数据表名称 [where 删除条件];</p>
+<ul>
+<li>案例：删除tb_user表中,id&#x3D;1的用户信息</li>
+</ul>
+<p>mysql&gt; delete from tb_user where id&#x3D;1;<br>mysql&gt; select <em>from db_user where age&gt;17;<br>mysql&gt; select</em> from db_user where id&#x3D;2;<br>mysql&gt; insert into tb_user values (1,’小凯’,’18’,’男’,’北京朝阳’);<br>mysql&gt; insert into db_user(id,username,age) values (2,’小鹿’,’21’);<br>mysql&gt; use db1;<br>mysql&gt; create table tb_user(<br>id int,<br>username varchar(20),<br>age tinyint unsigned,  #unsigned代表无符号型,只有0-255<br>sex enum(‘男’,’女’)，   #enum代表枚举类型，多选一。只能从给定的值中选择一个<br>address varchar(255)<br>) engine&#x3D;innodb default charset&#x3D;utf8;</p>
+
+  </div>
+  <div id=""></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2024/01/11/Anaconda%E6%8D%A2%E6%BA%90/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>Anaconda换源</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2024/01/11/Linux%E7%BB%88%E6%AD%A2%EF%BC%8C%E6%8C%82%E8%B5%B7%EF%BC%8C%E8%BF%90%E8%A1%8C/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>Linux终止，挂起，运行</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		<div class="footer">
+	<div class="Copyright">
+		©2024 主题：<a
+				style="text-decoration: none;display: contents; color: #898F9F;">Quiet</a>
+	</div>
+	<div class="contact">
+		
+			<a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+				<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+			</a>
+			
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+	
+		
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        
+        if(Boolean('false')){
+            gitalk.render('gitalk-container')
+        }
+    </script>
+
+	</body>
+</html>
+
