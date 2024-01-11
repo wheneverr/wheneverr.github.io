@@ -313,6 +313,13 @@
   width: 36px;
   height: 36px;
 }
+.header .header-top .h-left .title {
+  margin-left: 18px;
+  font-size: 20px;
+  font-weight: 500;
+  color: #12183A;
+  text-decoration: none;
+}
 .header .header-top .h-right {
   display: flex;
   flex-basis: 0;
@@ -325,7 +332,6 @@
   align-items: center;
   font-size: 16px;
   font-weight: 400;
-  text-transform: uppercase;
   list-style: none;
 }
 .header .header-top .h-right ul li {
