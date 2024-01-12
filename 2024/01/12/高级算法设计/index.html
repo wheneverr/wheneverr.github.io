@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>高级算法设计-whenever</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="算法,解题,课程,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.highlightAll();</script>
+
+	<meta name="generator" content="Hexo 6.3.0"></head>
+
+	<body>
+		<div class="header">
+	<div class="header-top" id="header-top">
+		<div class="h-left">
+			<a href="/">
+				<img src="/image/logo.png" alt="Quiet">
+
+			</a>
+			<div class="title">whenever的空间</div>
+		</div>
+		<div class="h-right">
+			<ul>
+				
+					
+							<li>
+								<a href="/">
+									主页
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/archives">
+									归档
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/categories">
+									分类
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/about">
+									关于
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+			</ul>
+		</div>
+		<div class="h-right-close">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+				<path fill="none" d="M0 0h24v24H0z" />
+				<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+			</svg>
+		</div>
+	</div>
+</div>
+<div class="sidebar">
+    <div class="topo">
+        <h2>whenever</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 66%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815);
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					right: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					right: "-100%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/算法">算法</a></li>
+            
+            <li><a href="/tags/解题">解题</a></li>
+            
+            <li><a href="/tags/课程">课程</a></li>
+            
+            
+        </ul>
+        
+        <h1>高级算法设计</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">whenever</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/算法/" target="_blank" >算法</a>
+                    
+                </div>
+                <p>2024-01-12 14:11:45</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <p>10.25</p>
+<p>向右看齐</p>
+<p>蚂蚁爬杆</p>
+<p>树状数组 偶数位置的数是冗余信息</p>
+<p>字典树（前缀树）</p>
+<p>前k个高频单词</p>
+<p>街头密匙</p>
+<p>序列划分</p>
+<h3 id="23-11-01-算法实验"><a href="#23-11-01-算法实验" class="headerlink" title="23&#x2F;11&#x2F;01 算法实验"></a>23&#x2F;11&#x2F;01 算法实验</h3><p>【问题描述】对n个数进行k次操作，每次操作选择一个数将最低位的1变成0，求k次操作后得到的数组的最小和。</p>
+<p>【输入】n， k，数组a[n]</p>
+<p>【输出】最小和</p>
+<pre><code class="cpp">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;algorithm&gt;
+
+using namespace std;
+
+int getsum(vector&lt;int&gt;a) &#123;
+    int sum = 0;
+    for (int i = 0; i &lt; a.size(); i++) &#123;
+        sum += a[i];
+    &#125;
+    return sum;
+&#125;
+
+// 对该数进行t次操作
+int opration(int num, int t) &#123;
+    if(num == 0) return num;
+    else&#123;
+        while (t &gt; 0 &amp;&amp; num != 0)
+            &#123;
+                num = num - (num &amp; (-num));
+                --t;
+            &#125;
+
+        return num;
+    &#125;
+&#125;
+
+vector&lt;int&gt; getpopca(vector&lt;int&gt;a, int n)&#123;
+    vector&lt;int&gt; popca(n);
+    for(int i = 0; i &lt; n; i++)&#123;
+        int t = 0;
+        int num = a[i];
+        while (num != 0)
+            &#123;
+                num = num - (num &amp; (-num));
+                ++t;
+            &#125;
+        popca[i] = t;
+    &#125;
+    return popca;
+&#125;
+
+int dpsolution(vector&lt;int&gt;&amp;a, int n, int k) &#123;
+    int dp[100][100];
+    vector&lt;int&gt; popca = getpopca(a, n);
+    dp[0][0] = a[0];
+    for(int i = 1; i &lt; n; i++)&#123;
+        dp[0][i] = dp[0][i-1] + a[i];
+    &#125;
+    for(int i = 1; i &lt;= k; i++)&#123;
+        dp[i][0] = opration(dp[i-1][0], 1);
+    &#125;
+    for(int i = 1; i&lt;= k; i++)&#123;
+        for(int j = 1; j&lt; n ; j++)&#123;
+            int minsum = dp[i][j-1] + a[j];
+            for(int k = 1; k &lt;= popca[j]; k++)&#123;
+                if(i - k &lt; 0) break;
+                minsum = min(minsum, dp[i-k][j-1] + opration(a[j], k));
+            &#125;
+            dp[i][j] = minsum;
+        &#125;
+    &#125;
+    return dp[k][n-1];
+&#125;
+/*
+  测试用例：
+  12 20
+  10000 1248 6400 9984 7777 443 10000 1248 6400 9984 7777 443
+  res = 28904
+*/
+int main() &#123;
+    int n, k;
+    vector&lt;int&gt; a;
+    cin &gt;&gt; n &gt;&gt; k;
+    for(int i = 0; i &lt; n; i++)&#123;
+        int num;
+        cin &gt;&gt; num;
+        a.push_back(num);
+    &#125;
+    int sum = dpsolution(a, n, k);
+    cout &lt;&lt; sum &lt;&lt; endl;
+    return 0;
+&#125;
+</code></pre>
+<h3 id="23-11-8-算法实验"><a href="#23-11-8-算法实验" class="headerlink" title="23&#x2F;11&#x2F;8 算法实验"></a>23&#x2F;11&#x2F;8 算法实验</h3><p>【问题描述】假设关系R(a,b), S(b,c)，其中R 包含｜R｜个元组，S包含｜S｜ 个元组，R中属性b的取值个数是V(R,b),S中属性取值个数是V(S,b)。关系R和S的自然连接运算结果中元组的个数是｜R｜*｜S｜&#x2F;max(V(R,b),V(S,b)).<br>现有N 个关系R1，R2，。。。。Rn,他们每个均包含两个属性，Ri和Ri+1有一个相同的属性，Rn和R1有一个相同的属性，，请设计他们连接的顺序，使得连接形成的中间结果最少，即连接的代价最少。<br>【输入】<br>第一行，一个整数N代表关系的个数。<br>下N行，每一行三个整数，空格隔开，代表关系Ri(a,b)中元组的个数，以及V(Ri,a)，V(Ri,b)中值的个数。<br>【输出】<br>最小连接代价的和。</p>
+<pre><code class="cpp">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;algorithm&gt;
+
+using namespace std;
+
+int sumcost = 0;
+
+int calculateCost(int R, int S,int Vr, int Vs) &#123;
+    return R * S / max(Vr, Vs);
+&#125;
+
+void getCostArr(vector&lt;vector&lt;int&gt;&gt; R, int N, int s[][100])&#123;
+    for(int len = 1; len &lt; N; len++)&#123;
+        for( int i = 0; i &lt; N * 2 - len; i++)&#123;
+            if(len == 1)
+                s[i][i+len] = calculateCost(R[i][0], R[i+len][0], R[i][2], R[i+len][1]);
+            else if(len == N-1)
+                s[i][i+len] = calculateCost(s[i][i+len-1], R[i+len][0], R[i+len-1][2], R[i+len][1]) / max(R[i][1],R[i+len][2]);
+            else&#123;
+                s[i][i+len] = calculateCost(s[i][i+len-1], R[i+len][0], R[i+len-1][2], R[i+len][1]);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+
+int getMinCost(vector&lt;vector&lt;int&gt;&gt; R,int N, int s[][100]) &#123;
+    vector&lt;vector&lt;int&gt;&gt; dp(N, vector&lt;int&gt;(N * 2)); // dp[i][j]是i到j合并的最小代价
+    for(int len = 1; len &lt; N; len++)&#123;
+        for( int i = 0; i &lt; N * 2 - len; i++)&#123;
+            if(len == 1)&#123;
+                dp[i][i+1] = s[i][i+1];
+            &#125;
+            else if(len ==2)&#123;
+                dp[i][i+2] = min(dp[i][i+1] + calculateCost(s[i][i+1], R[i+2][0], R[i+1][2], R[i+2][1]),
+                    dp[i+1][i+2] + calculateCost(R[i][0], s[i+1][i+2], R[i][2], R[i+1][1]));
+            &#125;
+            else if(len == N-1)&#123;
+                int mincost = min(s[i][i+len] + dp[i+1][i+len], s[i][i+len] + dp[i][i+len-1]);
+                for(int k = i+1; k&lt;i+len-1;k++)&#123;
+                    mincost = min(s[i][i+len] + dp[i][k] + dp[k+1][i+len], mincost);
+                &#125;
+                dp[i][i+len] = mincost;
+            &#125;
+            else&#123;
+                int mincost = min(calculateCost(R[i][0], s[i+1][i+len], R[i][2], R[i+1][1]) + dp[i+1][i+len],
+                calculateCost(s[i][i+len-1],R[i+len][0], R[i+len-1][2], R[i+len][1]) + dp[i][i+len-1]);
+                for( int k = i+1; k&lt;i+len-1;k++)&#123;
+                    mincost = min(calculateCost(s[i][k], s[k+1][i+len], R[k][2], R[k+1][1]) + dp[i][k] + dp[k+1][i+len], mincost);
+                &#125;
+                dp[i][i+len] = mincost;
+            &#125;
+        &#125;
+    &#125;
+    int sum = dp[0][N-1];
+    for(int i = 0; i&lt; N; i++)&#123;
+        sum = min(dp[i][i + N -1], sum);
+    &#125;
+
+    for(int i = 0; i&lt; N*2; i++)&#123;
+        for(int j = 0; j&lt;N*2;j++)&#123;
+            cout&lt;&lt;dp[i][j]&lt;&lt;&quot; &quot;;
+        &#125;
+        cout&lt;&lt;endl;
+    &#125;
+    return sum;
+&#125;
+
+/*
+测试用例：
+4
+24 3 4
+16 8 6
+36 3 12
+48 8 8
+
+10
+24 3 4
+16 8 6
+36 3 12
+48 8 8
+32 6 6
+54 9 2
+27 9 4
+20 5 3
+18 6 8
+24 4 8
+*/
+
+int main() &#123;
+    int N;
+    cin &gt;&gt; N;
+    vector&lt;vector&lt;int&gt;&gt; R(N, vector&lt;int&gt;(3));
+    for (int i = 0; i &lt; N; i++) &#123;
+        cin &gt;&gt; R[i][0] &gt;&gt; R[i][1] &gt;&gt; R[i][2];
+    &#125;
+    vector&lt;vector&lt;int&gt;&gt; S(N, vector&lt;int&gt;(N * 2)); //s[i][j]是i到j合并的结果的元组数
+    getCostArr(R,N,s);
+    int sum = getMinCost(R,N,s);
+    cout &lt;&lt; sum &lt;&lt; endl;
+    return 0;
+&#125;
+</code></pre>
+<h3 id="23-11-15算法实验"><a href="#23-11-15算法实验" class="headerlink" title="23&#x2F;11&#x2F;15算法实验"></a>23&#x2F;11&#x2F;15算法实验</h3><h4 id="1、套汇问题"><a href="#1、套汇问题" class="headerlink" title="1、套汇问题"></a>1、套汇问题</h4><p>【问题描述】<br>设已知n种货币C1，C2，，Cn以及对应的汇率矩阵R,其中R[][]是第i种单位货币<br>可以购买第j种货币的单位数。若存在R[i1][i2]<em>R[2][31]</em>..*R[ik][i1]&gt;1 ,则可以进行套汇。<br>请写一个算法，判断是否可以存在套汇的可能。<br>【输入格式】<br>第一行一个整数M代表货币的数量。<br>以下M行，每行M个整数，空格隔开，代表第i种货币和其他货币的汇率。注意此矩<br>阵不是对称阵<br>【输出格式】<br>0或者-个整数，0代表不存在套汇的可能，大于0代表存在几种套汇的可能。</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+using namespace std;
+
+const int INF = 1e9;
+
+int main() &#123;
+    int M;
+    cin &gt;&gt; M;
+    vector&lt;vector&lt;double&gt;&gt; rates(M, vector&lt;double&gt;(M));
+    for (int i = 0; i &lt; M; ++i) &#123;
+        for (int j = 0; j &lt; M; ++j) &#123;
+            cin &gt;&gt; rates[i][j];
+        &#125;
+    &#125;
+    for (int k = 0; k &lt; M; ++k) &#123;
+        for (int i = 0; i &lt; M; ++i) &#123;
+            for (int j = 0; j &lt; M; ++j) &#123;
+                rates[i][j] = max(rates[i][j], rates[i][k] * rates[k][j]);
+            &#125;
+        &#125;
+    &#125;
+    for (int i = 0; i &lt; M; ++i) &#123;
+        if (rates[i][i] &gt; 1) &#123;
+            cout &lt;&lt; &quot;1&quot; &lt;&lt; endl;
+            return 0;
+        &#125;
+    &#125;
+
+    // 不存在套汇的可能性
+    cout &lt;&lt; &quot;0&quot; &lt;&lt; endl;
+
+    return 0;
+&#125;
+</code></pre>
+<h4 id="2、射击气球"><a href="#2、射击气球" class="headerlink" title="2、射击气球"></a>2、射击气球</h4><p>【问题描述】<br>有一-些球形气球贴在一-堵用XY平面表示的墙面上。墙面.上的气球记录在整数数组<br>points，其中points[i] &#x3D; [xstart, xend]表示水平直径在xstart 和xend 之间的气球。.<br>你不知道气球的确切y坐标。<br>一支弓箭可以沿着x轴从不同点完全垂直地射出。在坐标x处射出- -支箭,若有一<br>个气球的直径的开始和结束坐标为xstart， xend， 且满足xstart ≤x≤xend,则该气<br>球会被引爆。可以射出的弓箭的数量没有限制。弓箭一旦被射出之后，可以无限地前进。<br>给你一个数组points ，返回引爆所有气球所必须射出的最小弓箭数。<br>【输入格式】<br>第一行一个整数M代表气球的的数量。<br>以下M行，每行两个整数，空格隔开，代表气球的xstart, xend坐标。<br>【输出格式】<br>最少需要的弓箭数量</p>
+<pre><code class="cpp">#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;algorithm&gt;
+using namespace std;
+
+bool compare(const vector&lt;int&gt;&amp; a, const vector&lt;int&gt;&amp; b) &#123;
+    return a[1] &lt; b[1];
+&#125;
+
+int findMinArrowShots(vector&lt;vector&lt;int&gt;&gt;&amp; points) &#123;
+    if (points.empty()) &#123;
+        return 0;
+    &#125;
+    // 按照结束坐标进行排序
+    sort(points.begin(), points.end(), compare);
+    int arrows = 1;
+    int end = points[0][1];
+    // 遍历气球，计算最小弓箭数量
+    for (int i = 1; i &lt; points.size(); ++i) &#123;
+        if (points[i][0] &gt; end) &#123;
+            // 如果当前气球的开始坐标大于前一个气球的结束坐标，需要额外的一支箭
+            arrows++;
+            end = points[i][1];
+        &#125;
+    &#125;
+
+    return arrows;
+&#125;
+
+int main() &#123;
+    int M;
+    cin &gt;&gt; M;
+    vector&lt;vector&lt;int&gt;&gt; points(M, vector&lt;int&gt;(2));
+    for (int i = 0; i &lt; M; ++i) &#123;
+        cin &gt;&gt; points[i][0] &gt;&gt; points[i][1];
+    &#125;
+    int result = findMinArrowShots(points);
+    cout &lt;&lt; result &lt;&lt; endl;
+    return 0;
+&#125;
+</code></pre>
+<h3 id="23-11-22-算法实验"><a href="#23-11-22-算法实验" class="headerlink" title="23&#x2F;11&#x2F;22 算法实验"></a>23&#x2F;11&#x2F;22 算法实验</h3><p>1.给定一个数组，包含2N个元素，将该数组分成大小相等的两部分S1和S2，S1和S2和的差绝对值最小。</p>
+<pre><code class="cpp">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+
+int mindiff = 0, s = 0;
+
+void dfs(vector&lt;int&gt; number, vector&lt;int&gt; &amp;op, vector&lt;int&gt; &amp;x, int n, int i, int N, int sum)&#123;
+    if(n == 0)&#123;
+        if(abs(s - sum - sum) &lt; mindiff)&#123;
+            mindiff = abs(s - sum - sum);
+            for(int j = 0; j &lt; N * 2; j++)&#123;
+                x[j] = op[j];
+            &#125;
+            return;
+        &#125;
+    &#125;
+    if( i == N * 2)
+        return;
+    sum += number[i];
+    op[i] = 1;
+    dfs(number, op, x, n-1, i+1, N, sum);
+    sum -= number[i];
+    op[i] = 0;
+    dfs(number, op, x, n, i+1, N, sum);
+&#125;
+
+/*
+7
+200  8 1 20 4000 2500 500 10 3 50 100 1200 4 400
+*/
+
+int main()&#123;
+    int N;
+    cin &gt;&gt; N;
+    vector&lt;int&gt; number(N * 2);
+    vector&lt;int&gt; op(N * 2);
+    vector&lt;int&gt; x(N * 2);
+    for(int i = 0; i&lt; N*2; i++)&#123;
+        cin &gt;&gt; number[i];
+    &#125;
+    for(int i = 0; i&lt; N*2; i++)&#123;
+        s += number[i];
+        if( i == N-1)&#123;
+            mindiff = s;
+        &#125;
+    &#125;
+    mindiff = abs(s - 2 * mindiff);
+    int i = 0, sum = 0;
+    dfs(number, op, x, N, i, N, sum);
+    cout &lt;&lt; mindiff&lt;&lt; endl;
+    //cout &lt;&lt; s &lt;&lt; endl;
+    for(int j = 0; j &lt; N*2; j++)&#123;
+        if(x[j] == 1)&#123;
+            cout &lt;&lt; number[j]&lt;&lt; &#39; &#39;;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<p>2.给定一个数组，将该数组分成两部分S1和S2，S1和S2和相等。</p>
+<pre><code class="cpp">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+
+int s = 0, hasfind = 0;
+
+void dfs(vector&lt;int&gt; number, vector&lt;int&gt; &amp;op, vector&lt;int&gt; &amp;x, int i, int N, int sum)&#123;
+    if(s - sum - sum == 0)&#123;
+        hasfind = 1;
+        for(int j = 0; j &lt; N * 2; j++)&#123;
+            x[j] = op[j];
+        &#125;
+        return;
+    &#125;
+    if( i == N * 2)
+        return;
+    sum += number[i];
+    op[i] = 1;
+    if(sum &lt;= s - sum)&#123;
+        dfs(number, op, x, i+1, N, sum);
+    &#125;
+    else&#123;
+        sum -= number[i];
+        op[i] = 0;
+        dfs(number, op, x, i+1, N, sum);
+    &#125;
+&#125;
+
+/*
+6
+200 9 20 4000 2400 500 10 4 50 100 1200 7
+*/
+
+int main()&#123;
+    int N;
+    cin &gt;&gt; N;
+    vector&lt;int&gt; number(N * 2);
+    vector&lt;int&gt; op(N * 2);
+    vector&lt;int&gt; x(N * 2);
+    for(int i = 0; i&lt; N*2; i++)&#123;
+        cin &gt;&gt; number[i];
+    &#125;
+    for(int i = 0; i&lt; N*2; i++)&#123;
+        s += number[i];
+    &#125;
+    int i = 0, sum = 0;
+    dfs(number, op, x, i, N, sum);
+    if(hasfind == 1)&#123;
+        for(int j = 0; j &lt; N*2; j++)&#123;
+            if(x[j] == 1)&#123;
+                cout &lt;&lt; number[j]&lt;&lt; &#39; &#39;;
+            &#125;
+        &#125; 
+    &#125;
+    else&#123;
+        cout &lt;&lt; -1 &lt;&lt; endl;
+    &#125;
+
+    return 0;
+&#125;
+</code></pre>
+<p>3.给定一个数组，将该数组分成两部分S1和S2，S1和S2和的差绝对值最小。</p>
+<pre><code class="cpp">#include&lt;iostream&gt;
+#include&lt;vector&gt;
+#include&lt;algorithm&gt;
+using namespace std;
+
+int mindiff = 0, s = 0;
+
+void dfs(vector&lt;int&gt; number, vector&lt;int&gt; &amp;op, vector&lt;int&gt; &amp;x, int i, int N, int sum)&#123;
+    if(abs(s - sum - sum) &lt; mindiff)&#123;
+        mindiff = abs(s - sum - sum);
+        for(int j = 0; j &lt; N * 2; j++)&#123;
+            x[j] = op[j];
+        &#125;
+        return;
+    &#125;
+    if( i == N * 2)
+        return;
+    sum += number[i];
+    op[i] = 1;
+    dfs(number, op, x, i+1, N, sum);
+    sum -= number[i];
+    op[i] = 0;
+    dfs(number, op, x, i+1, N, sum);
+&#125;
+
+/*
+7
+200 8 1 20 4000 2500 500 10 3 50 100 1200 4 400
+*/
+
+int main()&#123;
+    int N;
+    cin &gt;&gt; N;
+    vector&lt;int&gt; number(N * 2);
+    vector&lt;int&gt; op(N * 2);
+    vector&lt;int&gt; x(N * 2);
+    for(int i = 0; i&lt; N*2; i++)&#123;
+        cin &gt;&gt; number[i];
+    &#125;
+    for(int i = 0; i&lt; N*2; i++)&#123;
+        s += number[i];
+        if( i == N-1)&#123;
+            mindiff = s;
+        &#125;
+    &#125;
+    mindiff = abs(s - 2 * mindiff);
+    int i = 0, sum = 0;
+    dfs(number, op, x, i, N, sum);
+    cout &lt;&lt; mindiff&lt;&lt; endl;
+    for(int j = 0; j &lt; N*2; j++)&#123;
+        if(x[j] == 1)&#123;
+            cout &lt;&lt; number[j]&lt;&lt; &#39; &#39;;
+        &#125;
+    &#125;
+    return 0;
+&#125;
+</code></pre>
+<h3 id="23-11-29-算法课"><a href="#23-11-29-算法课" class="headerlink" title="23&#x2F;11&#x2F;29 算法课"></a>23&#x2F;11&#x2F;29 算法课</h3><p>回溯法</p>
+<p>满足约束-可行解 满足目标-最优解</p>
+<p>解空间树</p>
+<p>0&#x2F;1背包问题  对于第i个物品，要么选，要么不选，剪枝（左0右1）左剪枝op[1] &#x3D; 1，右剪枝op[i] &#x3D; 0</p>
+<p>求和为w的子集</p>
+<p>求解n皇后问题，第i个皇后不能与之前放置的皇后处于同一行或者同一列也不能处于对角线上，如果不能找到可行解，说明之前的某个皇后位置摆错了，则回溯</p>
+<h3 id="23-12-6-算法课"><a href="#23-12-6-算法课" class="headerlink" title="23&#x2F;12&#x2F;6 算法课"></a>23&#x2F;12&#x2F;6 算法课</h3><p>最小翻译 AB之间通信需要有C进行翻译 最小生成树</p>
+<p><strong>回溯</strong> 如果有一个最优解，而当前解的结果超过最优解，就不需要回溯。深度优先</p>
+<p><strong>分支限界法</strong> 不知道最优解，但是可以预测解的范围，即它的上界和下界。广度优先 最小耗费，最大收益</p>
+<p>15-谜问题 c(x)&#x3D;h(X)+g(x) h是非空白块不在正确位置的数量</p>
+<p>C-检索 成本函数c(x)</p>
+<p>旅行商问题 找到一条经过所有城市的闭合回路，让这次旅行代价最小 TSP</p>
+<p>货郎担问题</p>
+<p>0&#x2F;1背包问题</p>
+<p>最大团集问题</p>
+<p>圆排列问题</p>
+
+  </div>
+  <div id="gitalk-container"></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2024/01/12/N%E6%95%B0%E4%B9%8B%E5%92%8C/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>N数之和</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2024/01/11/Anaconda-Linux%E5%91%BD%E4%BB%A4/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>Anaconda Linux命令</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		<div class="footer">
+	<div class="Copyright">
+		©2024 主题：<a
+				style="text-decoration: none;display: contents; color: #898F9F;">Quiet</a>
+	</div>
+	<div class="contact">
+		
+			<a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+				<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+			</a>
+			
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+	
+		
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        
+        if(Boolean('true')){
+            gitalk.render('gitalk-container')
+        }
+    </script>
+
+	</body>
+</html>
+

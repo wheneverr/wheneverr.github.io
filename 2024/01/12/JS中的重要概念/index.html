@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>JS中的重要概念-whenever</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="前端,JavaScript,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.highlightAll();</script>
+
+	<meta name="generator" content="Hexo 6.3.0"></head>
+
+	<body>
+		<div class="header">
+	<div class="header-top" id="header-top">
+		<div class="h-left">
+			<a href="/">
+				<img src="/image/logo.png" alt="Quiet">
+
+			</a>
+			<div class="title">whenever的空间</div>
+		</div>
+		<div class="h-right">
+			<ul>
+				
+					
+							<li>
+								<a href="/">
+									主页
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/archives">
+									归档
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/categories">
+									分类
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/about">
+									关于
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+			</ul>
+		</div>
+		<div class="h-right-close">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+				<path fill="none" d="M0 0h24v24H0z" />
+				<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+			</svg>
+		</div>
+	</div>
+</div>
+<div class="sidebar">
+    <div class="topo">
+        <h2>whenever</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 66%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815);
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					right: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					right: "-100%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/前端">前端</a></li>
+            
+            <li><a href="/tags/JavaScript">JavaScript</a></li>
+            
+            
+        </ul>
+        
+        <h1>JS中的重要概念</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">whenever</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/前端/" target="_blank" >前端</a>
+                    
+                </div>
+                <p>2024-01-12 14:34:43</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <h2 id="和-的区别"><a href="#和-的区别" class="headerlink" title="&#x3D;&#x3D;和&#x3D;&#x3D;&#x3D;的区别"></a>&#x3D;&#x3D;和&#x3D;&#x3D;&#x3D;的区别</h2><p> “&#x3D;&#x3D;”称为相等运算符，“&#x3D;&#x3D;&#x3D;”称为严格运算符  <br>严格运算符的运算规则如下：</p>
+<ol>
+<li>如果两个值的类型不同，直接返回false。</li>
+<li>如果两个值的类型相同，均为原始类型（数值，字符串，布尔值），值相同则返回true，值不同返回false。</li>
+<li>如果两个值的类型相同，均为复合类型（对象，数组，函数），比较它们是否指向同一个对象。</li>
+<li>undefined和null与自身严格相等，即 undefined&#x3D;&#x3D;&#x3D;undefined，null&#x3D;&#x3D;&#x3D;null  ，如果undefined和null比较则返回false。</li>
+</ol>
+<p>相等运算符在比较相同类型的数据时和严格运算符一样。但如果数据类型不一样，相等运算符就会将两个比较的数据做强制类型转换。</p>
+<p>转换规则如下：</p>
+<ol>
+<li>原始类型的数据会转换成数值类型进行比较，如true&#x3D;&#x3D;1会返回true。</li>
+<li>对象与原始类型比较，会将对象转化成原始类型再进行比较。</li>
+<li>undefined和null与其他类型的值比较时都返回false，它们互相比较则返回true。</li>
+</ol>
+<p>因此相等运算符隐藏的类型转换，有可能对代码造成意外影响，如</p>
+<pre><code class="javascript">var a = undefined;
+if(!a)&#123;
+
+  console.log(&quot;1&quot;); //1
+
+&#125;
+</code></pre>
+<pre><code class="javascript">var a = undefined;
+
+if(a == null)&#123;
+
+  console.log(&quot;1&quot;); //1
+
+&#125;
+</code></pre>
+<pre><code class="javascript">var a = undefined;
+
+if(a === null)&#123;
+
+  console.log(&quot;1&quot;); //无输出
+
+&#125;
+</code></pre>
+<h2 id="继承的几种方式"><a href="#继承的几种方式" class="headerlink" title="继承的几种方式"></a>继承的几种方式</h2><p>在JavaScript中，继承可以通过不同的方式来实现。下面是几种常见的JavaScript继承方式：</p>
+<ol>
+<li><strong>原型链继承</strong>：<ul>
+<li>这是JavaScript中最基本的继承方式，它通过将一个对象的原型设置为另一个对象来实现继承。</li>
+<li>例如：</li>
+</ul>
+</li>
+</ol>
+<pre><code class="javascript">function Parent() &#123;
+  this.name = &quot;Parent&quot;;
+&#125;
+function Child() &#123;
+&#125;
+Child.prototype = new Parent();
+var child = new Child();
+console.log(child.name); // &quot;Parent&quot;
+</code></pre>
+<pre><code class="javascript">- 原型链继承的问题是，所有子类实例共享一个原型对象，可能导致属性污染和无法向父类传递参数。
+</code></pre>
+<ol start="2">
+<li><strong>构造函数继承</strong>：<ul>
+<li>这种方式通过在子类构造函数中调用父类构造函数来实现继承。</li>
+<li>例如：</li>
+</ul>
+</li>
+</ol>
+<pre><code class="javascript">function Parent(name) &#123;
+  this.name = name;
+&#125;
+function Child(name) &#123;
+  Parent.call(this, name);
+&#125;
+var child = new Child(&quot;Child&quot;);
+console.log(child.name); // &quot;Child&quot;
+</code></pre>
+<pre><code class="javascript">- 构造函数继承解决了原型链继承的属性共享问题，但不能继承父类原型上的方法。
+</code></pre>
+<ol start="3">
+<li><strong>组合继承</strong>：<ul>
+<li>这种方式结合了原型链继承和构造函数继承，以充分利用它们的优点。</li>
+<li>例如：</li>
+</ul>
+</li>
+</ol>
+<pre><code class="javascript">function Parent(name) &#123;
+  this.name = name;
+&#125;
+Parent.prototype.sayHello = function() &#123;
+  console.log(&quot;Hello, &quot; + this.name);
+&#125;
+function Child(name, age) &#123;
+  Parent.call(this, name);
+  this.age = age;
+&#125;
+Child.prototype = new Parent(); // 继承方法
+var child = new Child(&quot;Child&quot;, 5);
+child.sayHello(); // &quot;Hello, Child&quot;
+</code></pre>
+<pre><code class="javascript">- 组合继承是一种常见的继承方式，允许子类既继承父类构造函数中的属性，又继承父类原型上的方法。
+</code></pre>
+<ol start="4">
+<li><strong>原型式继承</strong>：<ul>
+<li>这种继承方式使用一个已有对象作为新对象的原型，实现了一种浅拷贝。</li>
+<li>例如：</li>
+</ul>
+</li>
+</ol>
+<pre><code class="javascript">var parent = &#123;
+  name: &quot;Parent&quot;,
+  sayHello: function() &#123;
+    console.log(&quot;Hello, &quot; + this.name);
+  &#125;
+&#125;;
+var child = Object.create(parent);
+child.name = &quot;Child&quot;;
+child.sayHello(); // &quot;Hello, Child&quot;
+</code></pre>
+<pre><code class="javascript">- 原型式继承适合简单对象的继承。
+</code></pre>
+<ol start="5">
+<li><strong>ES6类继承</strong>：<ul>
+<li>ES6引入了<code>class</code>关键字，使得继承更加清晰和易读。</li>
+<li>例如：</li>
+</ul>
+</li>
+</ol>
+<pre><code class="javascript">class Parent &#123;
+  constructor(name) &#123;
+    this.name = name;
+  &#125;
+  sayHello() &#123;
+    console.log(&quot;Hello, &quot; + this.name);
+  &#125;
+&#125;
+class Child extends Parent &#123;
+  constructor(name, age) &#123;
+    super(name);
+    this.age = age;
+  &#125;
+&#125;
+const child = new Child(&quot;Child&quot;, 5);
+child.sayHello(); // &quot;Hello, Child&quot;
+</code></pre>
+<pre><code class="javascript">- ES6类继承提供了一种更现代的方式来实现继承，支持`super`关键字和更多的语法糖。
+</code></pre>
+<p>这些是JavaScript中一些常见的继承方式，你可以根据项目的需求和个人喜好选择适合的继承方式。不同的方式都有各自的优点和限制。</p>
+<h2 id="原型与闭包"><a href="#原型与闭包" class="headerlink" title="原型与闭包"></a>原型与闭包</h2><p>“原型”和”闭包”是JavaScript中两个重要的概念，它们分别用于处理对象和作用域。下面是它们的简要说明：</p>
+<ol>
+<li>原型（Prototype）：<ul>
+<li>JavaScript是基于原型的面向对象编程语言。在JavaScript中，几乎所有的对象都有一个与之相关联的原型对象，它用于继承属性和方法。</li>
+<li>原型是一个对象，其他对象可以通过原型继承它的属性和方法。这种继承方式被称为<strong>原型继承</strong>。</li>
+<li>每个对象都有一个内部属性<code>[[Prototype]]</code>，它引用了该对象的原型。你可以使用<code>Object.getPrototypeOf(obj)</code>来获取对象的原型。</li>
+<li>通过原型，你可以实现对象之间的继承，从一个原型对象派生出多个实例，而这些实例共享相同的属性和方法。</li>
+<li>JavaScript中的函数也是对象，每个函数都有一个原型对象，被称为函数的原型。这对于创建自定义对象类型和添加共享方法非常有用。</li>
+</ul>
+</li>
+<li>闭包（Closure）：<ul>
+<li>闭包是指一个函数能够访问其外部作用域中的变量，即使在外部函数执行完毕后仍然可以访问这些变量。</li>
+<li>闭包的核心概念是<strong>词法作用域</strong>，也就是函数在定义时会捕获其作用域中的变量，而不是在执行时。</li>
+<li>闭包通常用于创建函数工厂，函数柯里化，私有变量和模块模式等高级编程技术。</li>
+<li>典型的示例是在一个函数内部定义另一个函数，内部函数引用了外部函数的变量，使得外部函数的变量保持在内存中。</li>
+</ul>
+</li>
+</ol>
+<p>下面是一个示例，演示了原型和闭包的基本用法：</p>
+<pre><code class="javascript">// 原型示例
+function Person(name) &#123;
+  this.name = name;
+&#125;
+
+Person.prototype.sayHello = function() &#123;
+  console.log(&quot;Hello, my name is &quot; + this.name);
+&#125;;
+
+const person1 = new Person(&quot;Alice&quot;);
+person1.sayHello(); // 输出 &quot;Hello, my name is Alice&quot;
+
+// 闭包示例
+function createCounter() &#123;
+  let count = 0;
+  return function() &#123;
+    count++;
+    console.log(count);
+  &#125;;
+&#125;
+
+const counter = createCounter();
+counter(); // 输出 1
+counter(); // 输出 2
+</code></pre>
+<p>这个示例中，我们使用了原型来添加<code>sayHello</code>方法到<code>Person</code>对象，同时也使用了闭包来创建一个计数器函数，该函数可以访问并修改其父函数<code>createCounter</code>的局部变量<code>count</code>。</p>
+<h2 id="vue和react-的区别"><a href="#vue和react-的区别" class="headerlink" title="vue和react 的区别"></a>vue和react 的区别</h2><p>Vue.js和React.js是两个流行的前端JavaScript库，用于构建交互性Web应用程序。它们有一些共同的目标和特点，但也有一些区别，以下是它们的一些主要区别：</p>
+<ol>
+<li><strong>框架 vs.库：</strong><ul>
+<li>Vue.js是一个渐进式框架，它提供了一整套工具和库，包括路由、状态管理、构建工具等，但你可以根据需要逐渐采用这些功能。</li>
+<li>React.js仅仅是一个库，专注于UI层面的构建，如果你需要其他功能，你需要选择和整合其他库或工具。</li>
+</ul>
+</li>
+<li><strong>学习曲线：</strong><ul>
+<li>Vue.js通常被认为在学习曲线上更容易上手，特别是对于那些对前端开发不够熟悉的人来说。</li>
+<li>React.js虽然学习曲线较陡峭，但一旦掌握了它的核心概念，就能够更自由地构建应用。</li>
+</ul>
+</li>
+<li><strong>语法：</strong><ul>
+<li>Vue.js使用基于HTML的模板语法，使模板更容易阅读和理解，因此可以更容易地在HTML文件中编写模板。</li>
+<li>React.js使用JSX（JavaScript XML），它允许你在JavaScript中编写类似XML的代码，但可能需要一些时间来适应这种语法。</li>
+</ul>
+</li>
+<li><strong>状态管理：</strong><ul>
+<li>Vue.js附带了内建的状态管理工具（Vuex），使全局状态管理更容易。</li>
+<li>React.js需要与其他库（如Redux或MobX）一起使用来管理应用的状态。</li>
+</ul>
+</li>
+<li><strong>生态系统：</strong><ul>
+<li>React.js拥有更大、更广泛的生态系统和社区支持，有更多的第三方库和组件可供选择。</li>
+<li>Vue.js的生态系统也在不断增长，但相对来说规模较小。</li>
+</ul>
+</li>
+<li><strong>渲染方式：</strong><ul>
+<li>Vue.js使用双向数据绑定，可以更容易地处理表单和用户输入。</li>
+<li>React.js使用了虚拟DOM，通过重新渲染来实现高效的UI更新。</li>
+</ul>
+</li>
+<li><strong>构建方式：</strong><ul>
+<li>Vue.js通常使用单文件组件（SFCs），将模板、JavaScript和CSS组合到一个文件中，这使得组件更加自包含。</li>
+<li>React.js通常使用分离的文件来管理组件的不同方面，这可以更好地支持大型应用。</li>
+</ul>
+</li>
+</ol>
+<p>总的来说，Vue.js和React.js都是强大的工具，选择哪一个取决于你的具体需求、个人偏好和项目要求。如果你更喜欢传统的模板语法和更简单的上手体验，Vue.js可能更适合你。如果你喜欢更多的自由度和更大的生态系统，你可能更倾向于React.js。</p>
+<h2 id="vuex是什么"><a href="#vuex是什么" class="headerlink" title="vuex是什么"></a>vuex是什么</h2><p>Vuex 是一个专为 Vue.js 应用程序开发的状态管理模式。它充当着应用程序中共享状态的中央存储，使得多个组件能够以可预测的方式访问和修改这些状态。Vuex 的主要目标是管理组件之间共享的状态，并提供一种集中式的数据管理方法。</p>
+<p>Vuex 的核心概念包括以下几个部分：</p>
+<ol>
+<li><strong>State（状态）</strong>：State 是应用程序中需要共享的数据状态，存储在一个单一的对象中，可以通过 <code>this.$store.state</code> 访问。State 是响应式的，任何组件在应用状态发生变化时都会得到通知。</li>
+<li><strong>Getters（获取器）</strong>：Getters 是用于从状态中派生出新的状态，例如，对状态进行筛选、排序或格式化等操作。Getter 函数可以接收其他 getter 函数作为参数。</li>
+<li><strong>Mutations（突变）</strong>：Mutations 是用于修改状态的函数。它们必须是同步的，因此可以追踪状态的变化。通过提交一个 mutation，你可以实现对状态的变更。</li>
+<li><strong>Actions（动作）</strong>：Actions 类似于 Mutations，但可以用于执行异步操作。它们可以包含任何异步代码，如数据获取、异步 API 调用等。然后，通过提交 mutation 来修改状态。</li>
+<li><strong>Modules（模块）</strong>：Vuex 允许你将 store 分割成模块。每个模块拥有自己的 state、getters、mutations 和 actions。这使得大型应用程序的状态管理变得更加有序和可维护。</li>
+</ol>
+<p>Vuex 帮助你在 Vue.js 应用中管理复杂的状态，特别是当你的应用变得庞大并包含多个组件，或者需要处理异步操作和数据流的情况。它提供了一种集中式的方式来管理应用的状态，使得状态变更的过程可追踪和可维护。</p>
+<p>你可以通过在 Vue.js 应用中使用 <code>vue add vuex</code> 或手动安装 Vuex 来开始使用它。一旦配置好，你可以创建 store 对象并将其与根 Vue 实例关联，然后在组件中访问和修改状态，以及执行异步操作。这让你的应用在不同组件之间共享数据变得更加容易。</p>
+<h2 id="vue2和vue3的区别"><a href="#vue2和vue3的区别" class="headerlink" title="vue2和vue3的区别"></a>vue2和vue3的区别</h2><p>Vue.js 2 和 Vue.js 3 之间有一些重要的区别，Vue 3 是 Vue.js 的下一个主要版本，引入了一些改进和新特性。以下是一些 Vue.js 2 和 Vue.js 3 之间的主要区别：</p>
+<ol>
+<li><strong>性能改进：</strong> Vue 3 通过优化内部算法和数据结构，以及使用 Proxy 代替 Object.defineProperty 等技术改进了性能。这使得 Vue 3 在更新和渲染大型组件树时更加高效。</li>
+<li><strong>Composition API：</strong> Vue 3 引入了 Composition API，这是一个全新的 API 风格，使得组件的逻辑更容易组织和重用。它取代了 Vue 2 中的选项对象（data、methods、computed 等），允许开发人员将相关逻辑组合到功能性模块中。</li>
+<li><strong>Teleport：</strong> Vue 3 引入了 Teleport，这是一个新的特性，允许你在 DOM 结构中的任何位置渲染组件的模板。这在处理模态框、弹出菜单和弹出式组件时非常有用。</li>
+<li><strong>Fragments：</strong> Vue 3 支持片段（Fragments），允许你返回多个根元素而无需包装它们在一个额外的父元素中。这提高了模板的灵活性。</li>
+<li><strong>全局 API 重构：</strong> Vue 3 重新设计了全局 API，使其更一致和容易理解。例如，全局指令和混入（mixin）的用法更加明确。</li>
+<li><strong>静态树提升：</strong> Vue 3 引入了静态树提升（Static Tree Hoisting），它可以通过分析模板生成的渲染函数来减小生成的代码体积，提高性能。</li>
+<li><strong>更小的体积：</strong> Vue 3 的核心库体积更小，这意味着更快的下载和启动时间。</li>
+<li><strong>TypeScript 集成：</strong> Vue 3 对 TypeScript 提供了更好的支持，并将 TypeScript 引入了核心库。</li>
+<li><strong>V-model 修饰符的更改：</strong> Vue 3 对 v-model 修饰符进行了更改，使其更加一致和可扩展。</li>
+<li><strong>多个根节点的渲染：</strong> 在 Vue 3 中，模板可以有多个根节点，而在 Vue 2 中只能有一个。</li>
+</ol>
+<p>需要注意的是，由于 Vue 3 引入了一些重大的改变，迁移到 Vue 3 可能需要对现有的 Vue 2 代码进行一些修改。不过，Vue 团队提供了工具和文档，以帮助开发者顺利迁移到 Vue 3。</p>
+<p>总之，Vue 3 提供了更好的性能、更灵活的 API 和更好的开发体验，是一个强大的前端框架，特别适用于构建现代的 Web 应用程序。</p>
+<h2 id="Vue的key有什么作用？"><a href="#Vue的key有什么作用？" class="headerlink" title="Vue的key有什么作用？"></a>Vue的key有什么作用？</h2><p>在 Vue 中，<code>key</code> 是用于帮助 Vue 识别节点的一个特殊属性。它通常在 <code>v-for</code> 循环中使用，以便更高效地管理和维护虚拟 DOM 中的节点。</p>
+<p>主要作用包括：</p>
+<ol>
+<li><strong>唯一性标识：</strong> <code>key</code> 用于标识 <code>v-for</code> 循环中生成的每个元素的唯一性。Vue 使用 <code>key</code> 来跟踪每个节点的身份，以便在进行 DOM 操作时进行高效的更新而不重新渲染整个列表。</li>
+<li><strong>准确的元素复用：</strong> 有时候，通过改变数组顺序或添加&#x2F;删除元素，Vue 可能会认为一些元素被复用，而实际上不是同一个元素。使用 <code>key</code> 可以确保元素的准确复用，防止出现意外的行为。</li>
+<li><strong>避免数据突变的问题：</strong> 使用 <code>key</code> 可以帮助避免一些由于数据突变引起的问题，特别是在某个元素从列表中消失，然后再次出现时。<code>key</code> 可以确保元素的状态和数据不会混淆。</li>
+</ol>
+<p>以下是一个示例，演示如何在 <code>v-for</code> 中使用 <code>key</code>：</p>
+<pre><code class="vue">&lt;div v-for=&quot;item in items&quot; :key=&quot;item.id&quot;&gt;
+      &#123;&#123; item.text &#125;&#125;
+&lt;/div&gt;
+</code></pre>
+<p>在这个示例中，<code>key</code> 属性使用 <code>item.id</code> 来确保每个生成的 <code>div</code> 元素在列表中的唯一性，并避免不必要的重新渲染。</p>
+<h2 id="本地存储cookie、localStorage、session区别"><a href="#本地存储cookie、localStorage、session区别" class="headerlink" title="本地存储cookie、localStorage、session区别"></a>本地存储cookie、localStorage、session区别</h2><p><code>Cookie</code>、<code>localStorage</code> 和 <code>sessionStorage</code> 都是前端用于在浏览器中存储数据的机制，但它们之间有一些关键区别：</p>
+<ol>
+<li><strong>Cookie：</strong><ul>
+<li>存储数据的大小限制：<code>Cookie</code> 存储的数据最大可以达到 4KB。</li>
+<li>生命周期：可以设置 <code>Cookie</code> 的过期时间，可以是会话级别（浏览器关闭后删除）或具体的日期。</li>
+<li>跨域：<code>Cookie</code> 可以被跨域共享，但可以设置 <code>SameSite</code> 属性来限制跨域共享。</li>
+<li>发送到服务器：每次请求都会带上相应的 <code>Cookie</code>，包括在 HTTP 请求头中，因此可能会影响性能。</li>
+</ul>
+</li>
+<li><strong>localStorage：</strong><ul>
+<li>存储数据的大小限制：<code>localStorage</code> 允许存储更大的数据，通常在 5MB 到 10MB 之间，不同浏览器可能有所不同。</li>
+<li>生命周期：<code>localStorage</code> 中的数据会一直存在，除非被主动删除，或者浏览器缓存被清除。</li>
+<li>跨域：<code>localStorage</code> 是限制在同源策略下的，不允许跨域访问。</li>
+<li>发送到服务器：<code>localStorage</code> 数据不会随每个 HTTP 请求自动发送到服务器。</li>
+</ul>
+</li>
+<li><strong>sessionStorage：</strong><ul>
+<li>存储数据的大小限制：与 <code>localStorage</code> 相同，允许存储更大的数据。</li>
+<li>生命周期：<code>sessionStorage</code> 中的数据仅在会话期间有效，当浏览器窗口关闭时会被删除。</li>
+<li>跨域：与 <code>localStorage</code> 一样，也是限制在同源策略下的，不允许跨域访问。</li>
+<li>发送到服务器：<code>sessionStorage</code> 数据不会随每个 HTTP 请求自动发送到服务器。</li>
+</ul>
+</li>
+</ol>
+<p>总结来说，这三种前端存储机制各有优点和适用场景：</p>
+<ul>
+<li>使用 <code>Cookie</code> 可以在客户端和服务器之间传递数据，但由于大小限制和性能问题，更适合存储小型数据和用户身份验证信息。</li>
+<li><code>localStorage</code> 适合存储相对较大的数据，且数据会一直保留，适合持久化存储。</li>
+<li><code>sessionStorage</code> 适合临时保存会话数据，仅在会话期间有效，关闭浏览器后自动删除。</li>
+</ul>
+<p>根据你的需求和安全性要求，你可以选择适合的存储机制。不过，无论哪种机制，都应当小心存储敏感信息，避免安全风险。</p>
+
+  </div>
+  <div id="gitalk-container"></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2024/01/12/CSS-transform/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>CSS transform</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2024/01/12/Golang%E5%85%A5%E9%97%A8/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>Golang入门</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		<div class="footer">
+	<div class="Copyright">
+		©2024 主题：<a
+				style="text-decoration: none;display: contents; color: #898F9F;">Quiet</a>
+	</div>
+	<div class="contact">
+		
+			<a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+				<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+			</a>
+			
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+	
+		
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        
+        if(Boolean('true')){
+            gitalk.render('gitalk-container')
+        }
+    </script>
+
+	</body>
+</html>
+

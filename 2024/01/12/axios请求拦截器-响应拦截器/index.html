@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>axios请求拦截器&amp;响应拦截器-whenever</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="前端,axios,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.highlightAll();</script>
+
+	<meta name="generator" content="Hexo 6.3.0"></head>
+
+	<body>
+		<div class="header">
+	<div class="header-top" id="header-top">
+		<div class="h-left">
+			<a href="/">
+				<img src="/image/logo.png" alt="Quiet">
+
+			</a>
+			<div class="title">whenever的空间</div>
+		</div>
+		<div class="h-right">
+			<ul>
+				
+					
+							<li>
+								<a href="/">
+									主页
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/archives">
+									归档
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/categories">
+									分类
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/about">
+									关于
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+			</ul>
+		</div>
+		<div class="h-right-close">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+				<path fill="none" d="M0 0h24v24H0z" />
+				<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+			</svg>
+		</div>
+	</div>
+</div>
+<div class="sidebar">
+    <div class="topo">
+        <h2>whenever</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 66%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815);
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					right: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					right: "-100%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/前端">前端</a></li>
+            
+            <li><a href="/tags/axios">axios</a></li>
+            
+            
+        </ul>
+        
+        <h1>axios请求拦截器&响应拦截器</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">whenever</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/前端/" target="_blank" >前端</a>
+                    
+                </div>
+                <p>2024-01-12 14:38:27</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <h2 id="一、-拦截器介绍"><a href="#一、-拦截器介绍" class="headerlink" title="一、 拦截器介绍"></a>一、 拦截器介绍</h2><p>一般在使用axios时，会用到拦截器的功能，一般分为两种：请求拦截器、响应拦截器。</p>
+<ol>
+<li>请求拦截器在请求发送前进行必要操作处理，例如添加统一cookie、请求体加验证、设置请求头等，相当于是对每个接口里相同操作的一个封装；</li>
+<li>响应拦截器同理，响应拦截器也是如此功能，只是在请求得到响应之后，对响应体的一些处理，通常是数据统一处理等，也常来判断登录失效等。</li>
+</ol>
+<h2 id="二、-Axios实例"><a href="#二、-Axios实例" class="headerlink" title="二、 Axios实例"></a>二、 Axios实例</h2><ol>
+<li>创建axios实例</li>
+</ol>
+<pre><code class="javascript">// 引入axios
+
+import axios from &#39;axios&#39;
+
+// 创建实例
+
+let instance = axios.create(&#123;
+
+  baseURL: &#39;xxxxxxxxxx&#39;,
+
+  timeout: 15000  // 毫秒
+
+&#125;)
+</code></pre>
+<ol>
+<li>baseURL设置：</li>
+</ol>
+<pre><code class="javascript">let baseURL;
+
+if(process.env.NODE_ENV === &#39;development&#39;) &#123;
+
+  baseURL = &#39;xxx本地环境xxx&#39;;
+
+&#125; else if(process.env.NODE_ENV === &#39;production&#39;) &#123;
+
+  baseURL = &#39;xxx生产环境xxx&#39;;
+
+&#125;
+
+// 实例
+
+let instance = axios.create(&#123;
+
+  baseURL: baseURL,
+
+  ...
+
+    &#125;)
+</code></pre>
+<ol>
+<li>修改实例配置的三种方式</li>
+</ol>
+<pre><code class="javascript">// 第一种：局限性比较大
+
+axios.defaults.timeout = 1000;
+
+axios.defaults.baseURL = &#39;xxxxx&#39;;
+
+// 第二种：实例配置
+
+let instance = axios.create(&#123;
+
+  baseURL: &#39;xxxxx&#39;,
+
+  timeout: 1000,  // 超时，401
+
+&#125;)
+
+// 创建完后修改
+
+instance.defaults.timeout = 3000
+
+// 第三种：发起请求时修改配置、
+
+instance.get(&#39;/xxx&#39;,&#123;
+
+  timeout: 5000
+
+&#125;)
+</code></pre>
+<p>这三种修改配置方法的优先级如下：请求配置 &gt; 实例配置 &gt; 全局配置</p>
+<h2 id="三、-配置拦截器"><a href="#三、-配置拦截器" class="headerlink" title="三、 配置拦截器"></a>三、 配置拦截器</h2><pre><code class="javascript">// 请求拦截器
+
+instance.interceptors.request.use(req=&gt;&#123;&#125;, err=&gt;&#123;&#125;);
+
+// 响应拦截器
+
+instance.interceptors.reponse.use(req=&gt;&#123;&#125;, err=&gt;&#123;&#125;);
+</code></pre>
+<ol>
+<li>请求拦截器</li>
+</ol>
+<pre><code class="javascript">// use(两个参数)
+
+axios.interceptors.request.use(req =&gt; &#123;
+
+  // 在发送请求前要做的事儿
+
+  ...
+
+  return req
+
+&#125;, err =&gt; &#123;
+
+  // 在请求错误时要做的事儿
+
+  ...
+
+  // 该返回的数据则是axios.catch(err)中接收的数据
+
+  return Promise.reject(err)
+
+&#125;)
+</code></pre>
+<ol>
+<li>响应拦截器</li>
+</ol>
+<pre><code class="javascript">// use(两个参数)
+
+axios.interceptors.reponse.use(res =&gt; &#123;
+
+  // 请求成功对响应数据做处理
+
+  ...
+
+  // 该返回的数据则是axios.then(res)中接收的数据
+
+  return res
+
+&#125;, err =&gt; &#123;
+
+  // 在请求错误时要做的事儿
+
+  ...
+
+  // 该返回的数据则是axios.catch(err)中接收的数据
+
+  return Promise.reject(err)
+
+&#125;)
+</code></pre>
+<ol>
+<li>常见错误码处理(error)axios请求错误时，可在catch里进行错误处理。</li>
+</ol>
+<pre><code class="javascript">axios.get().then().catch(err =&gt; &#123;
+
+  // 错误处理
+
+&#125;)
+</code></pre>
+<h2 id="四、-axios请求拦截器的案例"><a href="#四、-axios请求拦截器的案例" class="headerlink" title="四、 axios请求拦截器的案例"></a>四、 axios请求拦截器的案例</h2><pre><code class="javascript">// 设置请求拦截器
+
+axios.interceptors.request.use(
+
+  config =&gt; &#123;
+
+    // console.log(config) // 该处可以将config打印出来看一下，该部分将发送给后端（server端）
+
+    config.headers.Authorization = store.state.token
+
+    return config // 对config处理完后返回，下一步将向后端发送请求
+
+  &#125;,
+
+  error =&gt; &#123; // 当发生错误时，执行该部分代码
+
+    // console.log(error) // 调试用
+
+    return Promise.reject(error)
+
+  &#125;
+
+)
+
+// 定义响应拦截器 --&gt;token值无效时,清空token,并强制跳转登录页
+
+axios.interceptors.response.use(function (response) &#123;
+
+  // 响应状态码为 2xx 时触发成功的回调，形参中的 response 是“成功的结果”
+
+  return response
+
+&#125;, function (error) &#123;
+
+  // console.log(error)
+
+  // 响应状态码不是 2xx 时触发失败的回调，形参中的 error 是“失败的结果”
+
+  if (error.response.status === 401) &#123;
+
+    // 无效的 token
+
+    // 把 Vuex 中的 token 重置为空，并跳转到登录页面
+
+    // 1.清空token
+
+    store.commit(&#39;updateToken&#39;, &#39;&#39;)
+
+    // 2.跳转登录页
+
+    router.push(&#39;/login&#39;)
+
+  &#125;
+
+  return Promise.reject(error)
+
+&#125;)
+</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2024/png/42369922/1704872236875-9a96d93e-177d-4b5c-b307-910f2254b6c2.png#averageHue=%232d2c2c&clientId=uefd09edf-d68f-4&from=paste&id=uf9abfa72&originHeight=532&originWidth=678&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=ua883a5d9-e92d-42ea-b81d-d027b59e000&title="></p>
+<h2 id="响应数据格式转换（解决js整数精度问题）"><a href="#响应数据格式转换（解决js整数精度问题）" class="headerlink" title="响应数据格式转换（解决js整数精度问题）"></a>响应数据格式转换（解决js整数精度问题）</h2><p>在 Axios 的 transformResponse 中，你可以使用一个函数来对响应数据进行自定义的转换。下面是一个简单的例子，演示了如何将 long 类型的数据转换为字符串：</p>
+<pre><code class="javascript">transformResponse: [function (data) &#123;
+  // 对 data 进行处理，这里假设 data 是 JSON 对象
+  if (data &amp;&amp; data.userId) &#123;
+    // 将 userId 转换为字符串
+    data.userId = String(data.userId);
+  &#125;
+  return data;
+&#125;]
+</code></pre>
+<p>在这个例子中，我们假设 data 是一个 JSON 对象，并且其中有一个名为 userId 的属性，我们通过 String() 函数将其转换为字符串类型。<br>你可以根据实际情况进行调整，确保适用于你的数据结构。这个函数会在 Axios 接收到服务器响应后执行，允许你在将数据传递给 .then 或 .catch 处理之前对其进行修改。<br>请注意，transformResponse 的配置可以是一个函数，也可以是一个函数数组，允许你应用多个转换函数。</p>
+
+  </div>
+  <div id="gitalk-container"></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2024/01/12/SpringBoot%E6%AD%A5%E9%AA%A4/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>SpringBoot步骤</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2024/01/12/MAML%E7%AE%97%E6%B3%95/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>MAML算法</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		<div class="footer">
+	<div class="Copyright">
+		©2024 主题：<a
+				style="text-decoration: none;display: contents; color: #898F9F;">Quiet</a>
+	</div>
+	<div class="contact">
+		
+			<a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+				<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+			</a>
+			
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+	
+		
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        
+        if(Boolean('true')){
+            gitalk.render('gitalk-container')
+        }
+    </script>
+
+	</body>
+</html>
+

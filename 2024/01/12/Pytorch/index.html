@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>Pytorch-whenever</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="深度学习,pytorch,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.highlightAll();</script>
+
+	<meta name="generator" content="Hexo 6.3.0"></head>
+
+	<body>
+		<div class="header">
+	<div class="header-top" id="header-top">
+		<div class="h-left">
+			<a href="/">
+				<img src="/image/logo.png" alt="Quiet">
+
+			</a>
+			<div class="title">whenever的空间</div>
+		</div>
+		<div class="h-right">
+			<ul>
+				
+					
+							<li>
+								<a href="/">
+									主页
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/archives">
+									归档
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/categories">
+									分类
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/about">
+									关于
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+			</ul>
+		</div>
+		<div class="h-right-close">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+				<path fill="none" d="M0 0h24v24H0z" />
+				<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+			</svg>
+		</div>
+	</div>
+</div>
+<div class="sidebar">
+    <div class="topo">
+        <h2>whenever</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 66%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815);
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					right: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					right: "-100%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/深度学习">深度学习</a></li>
+            
+            <li><a href="/tags/pytorch">pytorch</a></li>
+            
+            
+        </ul>
+        
+        <h1>Pytorch</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">whenever</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/深度学习/" target="_blank" >深度学习</a>
+                    
+                </div>
+                <p>2024-01-12 14:36:36</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <h3 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h3><ol>
+<li>Tensor与Numpy数据的转换见Tensor</li>
+<li>CUDA张量<br><code>Tensors</code> 可以通过 <code>.to</code> 方法转换到不同的设备上，即 CPU 或者 GPU 上。</li>
+</ol>
+<pre><code class="python"># 当 CUDA 可用的时候，可用运行下方这段代码，采用 torch.device() 方法来改变 tensors 是否在 GPU 上进行计算操作
+if torch.cuda.is_available():
+    device = torch.device(&quot;cuda&quot;)          # 定义一个 CUDA 设备对象
+    y = torch.ones_like(x, device=device)  # 显示创建在 GPU 上的一个 tensor
+    x = x.to(device)                       # 也可以采用 .to(&quot;cuda&quot;) 
+    z = x + y
+    print(z)
+    print(z.to(&quot;cpu&quot;, torch.double))       # .to() 方法也可以改变数值类型
+</code></pre>
+<h3 id="神经网络"><a href="#神经网络" class="headerlink" title="神经网络"></a>神经网络</h3><p>在 PyTorch 中 <code>torch.nn</code> 专门用于实现神经网络。其中 <code>nn.Module</code> 包含了网络层的搭建，以及一个方法– <code>forward(input)</code> ，并返回网络的输出 <code>output</code> .</p>
+<p>对于神经网络来说，一个标准的训练流程是这样的：</p>
+<ul>
+<li>定义一个多层的神经网络</li>
+<li>对数据集的预处理并准备作为网络的输入</li>
+<li>将数据输入到网络</li>
+<li>计算网络的损失</li>
+<li>反向传播，计算梯度</li>
+<li>更新网络的梯度，一个简单的更新规则(随机梯度下降)是 <code>weight = weight - learning_rate * gradient</code></li>
+</ul>
+<h4 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h4><p>损失函数的输入是 <code>(output, target)</code> ，即网络输出和真实标签对的数据，然后返回一个数值表示网络输出和真实标签的差距。</p>
+<p>PyTorch 中其实已经定义了不少的<a href="https://link.zhihu.com/?target=https://pytorch.org/docs/nn.html#loss-functions">损失函数</a>：</p>
+<ol>
+<li>L1loss<br>class torch.nn.L1Loss(size_average&#x3D;None, reduce&#x3D;None) 官方文档中仍有reduction&#x3D;’elementwise_mean’参数，但代码实现中已经删除该参数</li>
+</ol>
+<p>功能： 计算output和target之差的绝对值，可选返回同维度的tensor或者是一个标量。<br>2. MSELoss</p>
+<pre><code>class torch.nn.MSELoss(size_average=None, reduce=None, reduction=&#39;elementwise_mean&#39;)
+</code></pre>
+<p>功能： 计算output和target之差的平方，可选返回同维度的tensor或者是一个标量。<br>3. CrossEntropyLoss</p>
+<pre><code>class torch.nn.CrossEntropyLoss(weight=None, size_average=None, ignore_index=-100, reduce=None, reduction=&#39;elementwise_mean&#39;)
+</code></pre>
+<p>功能： 将输入经过softmax激活函数之后，再计算其与target的交叉熵损失。即该方法将nn.LogSoftmax()和 nn.NLLLoss()进行了结合。严格意义上的交叉熵损失函数应该是nn.NLLLoss()。<br>4. NLLLoss</p>
+<pre><code>class torch.nn.NLLLoss(weight=None, size_average=None, ignore_index=-100, reduce=None, reduction=&#39;elementwise_mean&#39;)
+</code></pre>
+<p>功能： 交叉熵损失函数，计算公式：</p>
+<pre><code>loss(input, class) = -input[class]
+</code></pre>
+<ol start="5">
+<li>PoissonNLLLoss<br>class torch.nn.PoissonNLLLoss(log_input&#x3D;True, full&#x3D;False, size_average&#x3D;None, eps&#x3D;1e-08, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)</li>
+</ol>
+<p>功能： 用于target服从泊松分布的分类任务。<br>6. KLDivLoss</p>
+<pre><code>class torch.nn.KLDivLoss(size_average=None, reduce=None, reduction=&#39;elementwise_mean&#39;)
+
+功能： 计算input和target之间的KL散度( Kullback–Leibler divergence) 。
+
+计算公式：
+
+（后面有代码手动计算，证明计算公式确实是这个，但是为什么没有对x_n计算对数呢？）
+
+补充：KL散度 KL散度( Kullback–Leibler divergence) 又称为相对熵(Relative Entropy)，用于描述两个概率分布之间的差异。计算公式(离散时)：
+
+其中p表示真实分布，q表示p的拟合分布， D(P||Q)表示当用概率分布q来拟合真实分布p时，产生的信息损耗。这里的信息损耗，可以理解为损失，损失越低，拟合分布q越接近真实分布p。同时也可以从另外一个角度上观察这个公式，即计算的是 p 与 q 之间的对数差在 p 上的期望值。 特别注意，D(p||q) ≠ D(q||p)， 其不具有对称性，因此不能称为K-L距离。
+
+信息熵 = 交叉熵 - 相对熵 从信息论角度观察三者，其关系为信息熵 = 交叉熵 - 相对熵。在机器学习中，当训练数据固定，最小化相对熵 D(p||q) 等价于最小化交叉熵 H(p,q) 。
+
+参数：
+
+size_average(bool)- 当reduce=True时有效。为True时，返回的loss为平均值，平均值为element-wise的，而不是针对样本的平均；为False时，返回是各样本各维度的loss之和。 reduce(bool)- 返回值是否为标量，默认为True。
+
+使用注意事项： 要想获得真正的KL散度，需要如下操作：
+
+1. reduce = True ；size_average=False
+2. 计算得到的loss 要对batch进行求平均
+
+实例： /Code/3_optimizer/3_1_lossFunction/6_KLDivLoss.py
+</code></pre>
+<ol start="7">
+<li>BCELoss<br>class torch.nn.BCELoss(weight&#x3D;None, size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)<br>功能： 二分类任务时的交叉熵计算函数。此函数可以认为是nn.CrossEntropyLoss函数的特例。其分类限定为二分类，y必须是{0,1}。还需要注意的是，input应该为概率分布的形式，这样才符合交叉熵的应用。所以在BCELoss之前，input一般为sigmoid激活层的输出，官方例子也是这样给的。该损失函数在自编码器中常用。 计算公式：<br>参数：<br>weight(Tensor)- 为每个类别的loss设置权值，常用于类别不均衡问题。<br>size_average(bool)- 当reduce&#x3D;True时有效。为True时，返回的loss为平均值；为False时，返回的各样本的loss之和。<br>reduce(bool)- 返回值是否为标量，默认为True</li>
+<li>BCEWithLogitsLoss<br>class torch.nn.BCEWithLogitsLoss(weight&#x3D;None, size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’, pos_weight&#x3D;None)<br>功能： 将Sigmoid与BCELoss结合，类似于CrossEntropyLoss(将nn.LogSoftmax()和 nn.NLLLoss()进行结合）。即input会经过Sigmoid激活函数，将input变成概率分布的形式。 计算公式：<br>σ() 表示Sigmoid函数 特别地，当设置weight时：<br>参数：<br>weight(Tensor)- : 为batch中单个样本设置权值，If given, has to be a Tensor of size “nbatch”.<br>pos_weight-: 正样本的权重, 当p&gt;1，提高召回率，当P&lt;1，提高精确度。可达到权衡召回率(Recall)和精确度(Precision)的作用。 Must be a vector with length equal to the number of classes.<br>size_average(bool)- 当reduce&#x3D;True时有效。为True时，返回的loss为平均值；为False时，返回的各样本的loss之和。<br>reduce(bool)- 返回值是否为标量，默认为True</li>
+<li>MarginRankingLoss<br>class torch.nn.MarginRankingLoss(margin&#x3D;0, size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)<br>功能： 计算两个向量之间的相似度，当两个向量之间的距离大于margin，则loss为正，小于margin，loss为0。<br>计算公式：<br>y &#x3D;&#x3D; 1时，x1要比x2大，才不会有loss，反之，y &#x3D;&#x3D; -1 时，x1要比x2小，才不会有loss。<br>参数： margin(float)- x1和x2之间的差异。<br>size_average(bool)- 当reduce&#x3D;True时有效。为True时，返回的loss为平均值；为False时，返回的各样本的loss之和。<br>reduce(bool)- 返回值是否为标量，默认为True。</li>
+<li>HingeEmbeddingLoss<br>class torch.nn.HingeEmbeddingLoss(margin&#x3D;1.0, size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)<br>功能： 未知。为折页损失的拓展，主要用于衡量两个输入是否相似。 used for learning nonlinear embeddings or semi-supervised 。 计算公式：<br>参数：<br>margin(float)- 默认值为1，容忍的差距。<br>size_average(bool)- 当reduce&#x3D;True时有效。为True时，返回的loss为平均值；为False时，返回的各样本的loss之和。<br>reduce(bool)- 返回值是否为标量，默认为True。</li>
+</ol>
+<p>11.MultiLabelMarginLoss</p>
+<p>class torch.nn.MultiLabelMarginLoss(size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)</p>
+<p>功能： 用于一个样本属于多个类别时的分类任务。例如一个四分类任务，样本x属于第0类，第1类，不属于第2类，第3类。 计算公式：</p>
+<p>x[y[j]] 表示 样本x所属类的输出值，x[i]表示不等于该类的输出值。</p>
+<p>参数：</p>
+<p>size_average(bool)- 当reduce&#x3D;True时有效。为True时，返回的loss为平均值；为False时，返回的各样本的loss之和。</p>
+<p>reduce(bool)- 返回值是否为标量，默认为True。 Input: (C) or (N,C) where N is the batch size and C is the number of classes. Target: (C) or (N,C), same shape as the input.</p>
+<p>12.SmoothL1Loss</p>
+<p>class torch.nn.SmoothL1Loss(size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)</p>
+<p>功能： 计算平滑L1损失，属于 Huber Loss中的一种(因为参数δ固定为1了)。</p>
+<p>补充： Huber Loss常用于回归问题，其最大的特点是对离群点（outliers）、噪声不敏感，具有较强的鲁棒性。 公式为：</p>
+<p>理解为，当误差绝对值小于δ，采用L2损失；若大于δ，采用L1损失。 回到SmoothL1Loss，这是δ&#x3D;1时的Huber Loss。 计算公式为：</p>
+<p>对应下图红色线：</p>
+<p>参数： size_average(bool)- 当reduce&#x3D;True时有效。为True时，返回的loss为平均值；为False时，返回的各样本的loss之和。 reduce(bool)- 返回值是否为标量，默认为True。</p>
+<p>13.SoftMarginLoss</p>
+<p>class torch.nn.SoftMarginLoss(size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)</p>
+<p>功能： Creates a criterion that optimizes a two-class classification logistic loss between input tensor xand target tensor y (containing 1 or -1). （暂时看不懂怎么用，有了解的朋友欢迎补充！）</p>
+<p>计算公式：</p>
+<p>参数： size_average(bool)- 当reduce&#x3D;True时有效。为True时，返回的loss为平均值；为False时，返回的各样本的loss之和。 reduce(bool)- 返回值是否为标量，默认为True。</p>
+<p>14.MultiLabelSoftMarginLoss</p>
+<p>class torch.nn.MultiLabelSoftMarginLoss(weight&#x3D;None, size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)</p>
+<p>功能： SoftMarginLoss多标签版本，a multi-label one-versus-all loss based on max-entropy,</p>
+<p>计算公式：</p>
+<p>参数： weight(Tensor)- 为每个类别的loss设置权值。weight必须是float类型的tensor，其长度要于类别C一致，即每一个类别都要设置有weight。</p>
+<p>15.CosineEmbeddingLoss</p>
+<p>class torch.nn.CosineEmbeddingLoss(margin&#x3D;0, size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)</p>
+<p>功能： 用Cosine函数来衡量两个输入是否相似。 used for learning nonlinear embeddings or semi-supervised 。</p>
+<p>计算公式：</p>
+<p>参数：</p>
+<p>margin(float)- ： 取值范围[-1,1]， 推荐设置范围 [0, 0.5]</p>
+<p>size_average(bool)- 当reduce&#x3D;True时有效。为True时，返回的loss为平均值；为False时，返回的各样本的loss之和。</p>
+<p>reduce(bool)- 返回值是否为标量，默认为True。</p>
+<p>16.MultiMarginLoss</p>
+<p>class torch.nn.MultiMarginLoss(p&#x3D;1, margin&#x3D;1, weight&#x3D;None, size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)</p>
+<p>功能： 计算多分类的折页损失。</p>
+<p>计算公式：</p>
+<p>其中，0≤y≤x.size(1) ; i &#x3D;&#x3D; 0 to x.size(0) and i≠y; p&#x3D;&#x3D;1 or p &#x3D;&#x3D;2; w[y]为各类别的weight。</p>
+<p>参数：</p>
+<p>p(int)- 默认值为1，仅可选1或者2。</p>
+<p>margin(float)- 默认值为1</p>
+<p>weight(Tensor)- 为每个类别的loss设置权值。weight必须是float类型的tensor，其长度要于类别C一致，即每一个类别都要设置有weight。</p>
+<p>size_average(bool)- 当reduce&#x3D;True时有效。为True时，返回的loss为平均值；为False时，返回的各样本的loss之和。</p>
+<p>reduce(bool)- 返回值是否为标量，默认为True。</p>
+<p>17.TripletMarginLoss</p>
+<p>class torch.nn.TripletMarginLoss(margin&#x3D;1.0, p&#x3D;2, eps&#x3D;1e-06, swap&#x3D;False, size_average&#x3D;None, reduce&#x3D;None, reduction&#x3D;’elementwise_mean’)</p>
+<p>功能： 计算三元组损失，人脸验证中常用。 如下图Anchor、Negative、Positive，目标是让Positive元和Anchor元之间的距离尽可能的小，Positive元和Negative元之间的距离尽可能的大。</p>
+<p>从公式上看，Anchor元和Positive元之间的距离加上一个threshold之后，要小于Anchor元与Negative元之间的距离。</p>
+<p>计算公式：</p>
+<p>参数：</p>
+<p>margin(float)- 默认值为1</p>
+<p>p(int)- The norm degree ，默认值为2</p>
+<p>swap(float)– The distance swap is described in detail in the paper Learning shallow convolutional feature descriptors with triplet losses by V. Balntas, E. Riba et al. Default: False</p>
+<p>size_average(bool)- 当reduce&#x3D;True时有效。为True时，返回的loss为平均值；为False时，返回的各样本的loss之和。 reduce(bool)- 返回值是否为标量，默认为True。</p>
+<p>12.nn.CTCLoss</p>
+<p>nn.CTCLoss(blank&#x3D;0, reduction&#x3D;’mean’, zero_infinity&#x3D;False)</p>
+<p>功能： Connectionist Temporal Classification。主要是解决时序类数据的分类问题，特别是label 和output 不对齐的问题（Alignment problem）</p>
+<p>参考文献：Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Network</p>
+<p>CTC算法全称叫：Connectionist temporal classification。从字面上理解它是用来解决时序类数据的分类问题。</p>
+<h4 id="反向传播"><a href="#反向传播" class="headerlink" title="反向传播"></a>反向传播</h4><p>反向传播的实现只需要调用 <code>loss.backward()</code> 即可，当然首先需要清空当前梯度缓存，即<code>.zero_grad()</code> 方法，否则之前的梯度会累加到当前的梯度，这样会影响权值参数的更新。</p>
+
+  </div>
+  <div id="gitalk-container"></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2024/01/12/Tensor/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>Tensor</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2024/01/12/MVVM%E6%9E%B6%E6%9E%84%E5%92%8Cvue3/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>MVVM架构和vue3</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		<div class="footer">
+	<div class="Copyright">
+		©2024 主题：<a
+				style="text-decoration: none;display: contents; color: #898F9F;">Quiet</a>
+	</div>
+	<div class="contact">
+		
+			<a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+				<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+			</a>
+			
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+	
+		
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        
+        if(Boolean('true')){
+            gitalk.render('gitalk-container')
+        }
+    </script>
+
+	</body>
+</html>
+

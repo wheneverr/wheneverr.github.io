@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>MAML算法-whenever</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="算法,深度学习,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.highlightAll();</script>
+
+	<meta name="generator" content="Hexo 6.3.0"></head>
+
+	<body>
+		<div class="header">
+	<div class="header-top" id="header-top">
+		<div class="h-left">
+			<a href="/">
+				<img src="/image/logo.png" alt="Quiet">
+
+			</a>
+			<div class="title">whenever的空间</div>
+		</div>
+		<div class="h-right">
+			<ul>
+				
+					
+							<li>
+								<a href="/">
+									主页
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/archives">
+									归档
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/categories">
+									分类
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/about">
+									关于
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+			</ul>
+		</div>
+		<div class="h-right-close">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+				<path fill="none" d="M0 0h24v24H0z" />
+				<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+			</svg>
+		</div>
+	</div>
+</div>
+<div class="sidebar">
+    <div class="topo">
+        <h2>whenever</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 66%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815);
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					right: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					right: "-100%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/算法">算法</a></li>
+            
+            <li><a href="/tags/深度学习">深度学习</a></li>
+            
+            
+        </ul>
+        
+        <h1>MAML算法</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">whenever</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/深度学习/" target="_blank" >深度学习</a>
+                    
+                </div>
+                <p>2024-01-12 14:38:00</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <p><strong>MAML</strong>在学术界已经是非常重要的模型了，论文<strong>Model-Agnostic Meta-Learning for Fast Adaptation of Deep Networks</strong>自2017年发表至今已经收获了400+的引用。由于当前网上关于MAML的中文介绍少之又少，可能很多小伙伴对其还不是特别理解。所以今天我整理了这段时间来的学习心得，与大家分享自己对MAML的认识与理解。MAML可以用于Supervised Regression and Classification以及Reinforcement Learning。由于我对强化学习不是特别了解，因此这篇文章，均是基于MAML在Supervised Regression and Classification中的运用。</p>
+<h2 id="一、一些相关概念的介绍"><a href="#一、一些相关概念的介绍" class="headerlink" title="一、一些相关概念的介绍"></a><strong>一、一些相关概念的介绍</strong></h2><p>在原论文中，作者直接引用了许多元学习相关的概念，例如 <strong>meta-learning, model-agnostic, N-way K-shot, tasks</strong>等等，其中有些概念在MAML中还有特殊的含义。在此，我尽量用通俗易懂的方式对这些概念为大家做一个介绍。<br><strong>(1) meta-learning</strong><br>meta-learning即元学习，也可以称为“<strong>learning to learn</strong>”。常见的深度学习模型，目的是学习一个用于预测的数学模型。而元学习面向的不是学习的结果，而是学习的过程。其学习的不是一个直接用于预测的数学模型，而是学习“如何更快更好地学习一个数学模型”。<br>举一个现实生活的例子。我们教小朋友读英语时，可以直接让他们模仿apple、banana的发音。但是他们很快又会遇到新的单词，例如strawberry，这是小朋友就需要重新听你的发音，才能正确地读出这个新单词。我们换一种方式，这一次我们不教每个单词的发音，而是教音标的发音。从此小朋友再遇见新单词，他们只要根据音标，就可以正确地读出这个单词。学习音标的过程，正是一个元学习的过程。<br>在深度学习中，已经被提出的元学习模型有很多，大致上可以分类为learning good weight initializations，meta-models that generate the parameters of other models 以及learning transferable optimizers。其中MAML属于第一类。MAML学习一个好的初始化权重，从而在新任务上实现fast adaptation，即在小规模的训练样本上迅速收敛并完成fine-tune。<br><strong>(2) model-agnostic</strong><br>model-agnostic即<strong>模型无关</strong>。MAML与其说是一个深度学习模型，倒不如说是一个框架，提供一个meta-learner用于训练base-learner。这里的meta-learner即MAML的精髓所在，用于learning to learn；而base-learner则是在目标数据集上被训练，并实际用于预测任务的真正的数学模型。绝大多数深度学习模型都可以作为base-learner无缝嵌入MAML中，而MAML甚至可以用于强化学习中，这就是MAML中model-agnostic的含义。<br><strong>(3) N-way K-shot</strong><br>N-way K-shot是few-shot learning中常见的实验设置。few-shot learning指利用很少的被标记数据训练数学模型的过程，这也正是MAML擅长解决的问题之一。N-way指训练数据中有N个类别，K-shot指每个类别下有K个被标记数据。<br><strong>(4) task</strong><br>MAML的论文中多次出现名词<strong>task</strong>，模型的训练过程都是围绕task展开的，而作者并没有给它下一个明确的定义。要正确地理解task，我们需要了解的相关概念包括{\mathcal D}<em>{meta-train}, {\mathcal D}</em>{meta-test} , <strong>support set</strong>, <strong>query set</strong>, <strong>meta-train classes</strong>, <strong>meta-test classes</strong>等等。是不是有点眼花缭乱？不要着急，举个简单的例子，大家就可以很轻松地掌握这些概念。<br>我们假设这样一个场景：我们需要利用MAML训练一个数学模型模型 M_{fine-tune} ，目的是对未知标签的图片做分类，类别包括 P_1～P_5 （每类5个已标注样本用于训练。另外每类有15个已标注样本用于测试）。我们的训练数据除了 P_1～P_5 中已标注的样本外，还包括另外10个类别的图片 C_1～C_{10} （每类30个已标注样本），用于帮助训练元学习模型 M_{meta} 。我们的实验设置为<strong>5-way 5-shot</strong>。<br>关于具体的训练过程，会在下一节MAML算法详解中介绍。这里我们只需要有一个大概的了解：MAML首先利用 C_1～C_{10} 的数据集训练元模型M_{meta}，再在P_1～P_5的数据集上精调（fine-tune）得到最终的模型 M_{fine-tune} 。<br>此时，C_1～C_{10}即<strong>meta-train classes</strong>，C_1～C_{10}包含的共计300个样本，即 {\mathcal D}<em>{meta-train} ，是用于训练 M</em>{meta} 的数据集。与之相对的，P_1～P_5即<strong>meta-test classes</strong>，P_1～P_5包含的共计100个样本，即 {\mathcal D}<em>{meta-test} ，是用于训练和测试 M</em>{fine-tune} 的数据集。<br>根据5-way 5-shot的实验设置，我们在训练 M_{meta} 阶段，从 C_1～C_{10} 中随机取5个类别，每个类别再随机取20个已标注样本，组成一个<strong>task</strong> {\mathcal T} 。其中的5个已标注样本称为 {\mathcal T} 的<strong>support set</strong>，另外15个样本称为 {\mathcal T} 的<strong>query set</strong>。这个<strong>task</strong> {\mathcal T} ， 就相当于普通深度学习模型训练过程中的一条训练数据。那我们肯定要组成一个batch，才能做随机梯度下降SGD对不对？所以我们反复在训练数据分布中抽取若干个这样的<strong>task</strong> {\mathcal T} ，组成一个batch。在训练 M_{fine-tune} 阶段，<strong>task</strong>、<strong>support set</strong>、<strong>query set</strong>的含义与训练 M_{meta} 阶段均相同。</p>
+<h2 id="二、MAML算法详解"><a href="#二、MAML算法详解" class="headerlink" title="二、MAML算法详解"></a><strong>二、MAML算法详解</strong></h2><p>作者在论文中给出的算法流程如下：<br><img src="https://cdn.nlark.com/yuque/0/2024/png/42369922/1704873273570-a64eafcf-2bb8-4d0f-b539-f2cfb7c11775.png#averageHue=%23ebebeb&clientId=ua7630e96-b7e2-4&from=paste&id=ud6780226&originHeight=370&originWidth=530&originalType=url&ratio=1&rotation=0&showTitle=false&size=115839&status=done&style=none&taskId=u2d7696a5-9037-487e-9888-cc361410ab6&title=" alt="image.png"><br>MAML算法<br>该算法实质上是MAML预训练阶段的算法，目的是得到模型 M_{meta} 。不要被这些数学符号吓到喔，这个算法的思路其实很简单。接下来，我们来一行一行地分析这个算法。<br>首先来看两个<strong>Require</strong>。<br><strong>第一个Require</strong>指的是在 {\mathcal D}<em>{meta-train} 中<strong>task</strong>的分布。结合我们在上一小节举的例子，这里即反复随机抽取<strong>task</strong> {\mathcal T} ，形成一个由若干个（e.g., 1000个） {\mathcal T} 组成的<strong>task</strong>池，作为MAML的训练集。有的小伙伴可能要纳闷了，训练样本就这么多，要组合形成那么多的task，岂不是不同task之间会存在样本的重复？或者某些task的<strong>query set</strong>会成为其他task的<strong>support set</strong>？没错！就是这样！我们要记住，MAML的目的，在于<strong>fast adaptation</strong>，即通过对大量task的学习，获得足够强的泛化能力，从而面对新的、从未见过的task时，通过fine-tune就可以快速拟合。task之间，只要存在一定的差异即可。再强调一下，MAML的训练是基于<strong>task</strong>的，而这里的每个<strong>task</strong>就相当于普通深度学习模型训练过程中的一条训练数据。<br><strong>第二个Require</strong>就很好理解啦。step size其实就是学习率，读过MAML论文的小伙伴一定会对<strong>gradient by gradient</strong>这个词有印象。MAML是基于二重梯度的，每次迭代包括两次参数更新的过程，所以有两个学习率可以调整。<br>接下来，就是激动人心的算法流程。<br><strong>步骤1</strong>，随机初始化模型的参数，没什么好说的，任何模型训练前都有这一步。<br><strong>步骤2，</strong>是一个循环，可以理解为一轮迭代过程或一个epoch，当然啦预训练的过程是可以有多个epoch的。<br><strong>步骤3，</strong>相当于pytorch中的DataLoader，即随机对若干个（e.g., 4个）<strong>task</strong>进行采样，形成一个batch。<br><strong>步骤4～步骤7，是第一次梯度更新的过程。注意这里我们可以理解为copy了一个原模型，计算出新的参数，用在第二轮梯度的计算过程中。我们说过，MAML是gradient by gradient的，有两次梯度更新的过程。步骤4～7中，利用batch中的每一个task，我们分别对模型的参数进行更新（4个task即更新4次）。注意这一个过程</strong>在算法中是可以反复执行多次的，伪代码没有体现这一层循环，但是作者再分析的部分明确提到” using multiple gradient updates is a straightforward extension”。<br><strong>步骤5，即对利用batch中的某一个task中的support set，计算每个参数的梯度。在N-way K-shot的设置下，这里的</strong>support set应该有<strong>NK</strong>个。作者在算法中写with respect to K examples，默认对每一个class下的K个样本做计算。实际上参与计算的总计有NK个样本。这里的loss计算方法，在回归问题中，就是MSE；在分类问题中，就是<strong>cross-entropy</strong>。<br><strong>步骤6，</strong>即第一次梯度的更新。<br>步骤4～步骤7结束后，MAML完成了<strong>第一次</strong>梯度更新。接下来我们要做的，是根据第一次梯度更新得到的参数，通过gradient by gradient，计算第二次梯度更新。第二次梯度更新时计算出的梯度，直接通过SGD作用于原模型上，也就是我们的模型真正用于更新其参数的梯度。换句话说，第一次梯度更新是为了第二次梯度更新，而第二次梯度更新才是为了更新模型参数。<br>关于以上过程，这里再补充一下解释：假设原模型是 \theta_a ，我们复制了它，得到\theta_b。在\theta_b上，我们做了反向传播及更新参数，得到第一次梯度更新的结果 \theta_b’ 。接着，在 \theta_b’上，我们将计算第二次梯度更新。此时需要先在 \theta_b’上计算梯度（计算方法如接下来的步骤8所述），<strong>但是梯度更新的并非是 \theta_b’，而是原模型</strong>\theta_a。这就是二重梯度在代码中的实现。<br><strong>步骤8</strong>即对应第二次梯度更新的过程。这里的loss计算方法，大致与步骤5相同，但是不同点有两处。一处是我们不再是分别利用每个task的loss更新梯度，而是像常见的模型训练过程一样，计算一个batch的loss总和，对梯度进行随机梯度下降SGD。另一处是这里参与计算的样本，是task中的<strong>query set</strong>，在我们的例子中，即5-way*15&#x3D;75个样本，目的是增强模型在task上的泛化能力，避免过拟合<strong>support set</strong>。步骤8结束后，模型结束在该batch中的训练，开始回到步骤3，继续采样下一个batch。<br>以上即时MAML预训练得到 M</em>{meta} 的全部过程。事实上，MAML正是因为其简单的思想与惊人的表现，在元学习领域迅速流行了起来。接下来，应该是面对新的<strong>task</strong>，在 M_{meta} 的基础上，精调得到 M_{fine-tune} 的方法。原文中没有介绍<strong>fine-tune</strong>的过程，这里我简单介绍一下。<br><strong>fine-tune</strong>的过程与预训练的过程大致相同，不同的地方主要在于以下几点：</p>
+<ul>
+<li>步骤1中，fine-tune不用再随机初始化参数，而是利用训练好的 M_{meta} 初始化参数。</li>
+<li>步骤3中，fine-tune只需要抽取一个task进行学习，自然也不用形成batch。fine-tune利用这个task的support set训练模型，利用query set测试模型。实际操作中，我们会在 {\mathcal D}<em>{meta-test} 上随机抽取许多个task（e.g., 500个），分别微调模型 M</em>{meta} ，并对最后的测试结果进行平均，从而避免极端情况。</li>
+<li>fine-tune没有步骤8，因为task的query set是用来<strong>测试</strong>模型的，标签对模型是未知的。因此<strong>fine-tune过程没有第二次梯度更新，而是直接利用第一次梯度计算的结果更新参数</strong></li>
+</ul>
+
+  </div>
+  <div id="gitalk-container"></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2024/01/12/axios%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%E5%99%A8-%E5%93%8D%E5%BA%94%E6%8B%A6%E6%88%AA%E5%99%A8/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>axios请求拦截器&amp;响应拦截器</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2024/01/12/LSTM-%E9%95%BF%E7%9F%AD%E6%97%B6%E8%AE%B0%E5%BF%86%E7%BD%91%E7%BB%9C/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>LSTM(长短时记忆网络)</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		<div class="footer">
+	<div class="Copyright">
+		©2024 主题：<a
+				style="text-decoration: none;display: contents; color: #898F9F;">Quiet</a>
+	</div>
+	<div class="contact">
+		
+			<a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+				<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+			</a>
+			
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+	
+		
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        
+        if(Boolean('true')){
+            gitalk.render('gitalk-container')
+        }
+    </script>
+
+	</body>
+</html>
+

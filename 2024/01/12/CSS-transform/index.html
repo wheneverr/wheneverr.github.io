@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		
+<title>CSS transform-whenever</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="shortcut icon" type="image/x-icon" href="/image/favicon.ico">
+
+<link rel="stylesheet" href="/css/index.css">
+
+
+
+<meta name="keywords" content="前端,css,">
+<meta name="description" content="">
+
+
+<script src="/js/jquery.min.js"></script>
+
+
+<script src="/js/index.js"></script>
+
+
+<script src="/js/fancybox.umd.js"></script>
+
+
+<script src="/js/fancybox-images.js"></script>
+
+
+<script src="/js/gitalk.min.js"></script>
+
+
+<script src="/js/hljs.min.js"></script>
+ 
+<script>hljs.highlightAll();</script>
+
+	<meta name="generator" content="Hexo 6.3.0"></head>
+
+	<body>
+		<div class="header">
+	<div class="header-top" id="header-top">
+		<div class="h-left">
+			<a href="/">
+				<img src="/image/logo.png" alt="Quiet">
+
+			</a>
+			<div class="title">whenever的空间</div>
+		</div>
+		<div class="h-right">
+			<ul>
+				
+					
+							<li>
+								<a href="/">
+									主页
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/archives">
+									归档
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/categories">
+									分类
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+					
+							<li>
+								<a href="/about">
+									关于
+								</a>
+								<span class="dot"></span>
+							</li>
+							
+								
+			</ul>
+		</div>
+		<div class="h-right-close">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+				<path fill="none" d="M0 0h24v24H0z" />
+				<path d="M3 4h18v2H3V4zm0 7h18v2H3v-2zm0 7h18v2H3v-2z" fill="rgba(68,68,68,1)" />
+			</svg>
+		</div>
+	</div>
+</div>
+<div class="sidebar">
+    <div class="topo">
+        <h2>whenever</h2>
+    </div>
+    <ul>
+        
+        <li>
+            <a href="/">主页</a>
+        </li>
+        
+        <li>
+            <a href="/archives">归档</a>
+        </li>
+        
+        <li>
+            <a href="/categories">分类</a>
+        </li>
+        
+        <li>
+            <a href="/tags">标签</a>
+        </li>
+        
+        <li>
+            <a href="/about">关于</a>
+        </li>
+        
+    </ul>
+    <div class="my_foot">
+        
+        <a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+            <img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+        </a>
+        
+    </div>
+</div>
+<div class='shelter'>
+</div>
+<style>
+    .shelter{
+        background-color: #333;
+        opacity:0.5;
+        cursor: pointer;
+        display: none; 
+        position: fixed;
+        left: 0;
+        top: 0; 
+        right: 0;
+        bottom: 0;
+        z-index: 1998;
+    }
+    .sidebar {
+        width: 66%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: -100%;
+        bottom: 0;
+        background: #fff;
+        z-index: 1999;
+        text-align: center;
+        box-shadow: -6px 0 20px rgba(98, 94, 94, .815);
+    }
+
+    .topo {
+        width: 100%;
+        height: 200px;
+        background: url(https://api.ixiaowai.cn/gqapi/gqapi.php) no-repeat;
+        background-size: 100% 100%;
+        position: relative;
+        display: flex;
+        align-items: flex-end
+    }
+
+    .topo h2 {
+        color: #fff;
+        z-index: 1;
+        position: relative;
+        margin: 0 0 10px 10px;
+        font-size: 1.2em;
+        box-sizing: border-box
+    }
+
+    .topo:before {
+        content: '';
+        background-image: url(/image/pattern.png);
+        background-repeat: repeat;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 1
+    }
+
+    .sidebar ul {
+        width: 100%;
+        margin-top: 50px
+    }
+
+    .sidebar ul li {
+        height: 50px;
+        list-style: none;
+        font-size: 1.2em;
+        text-align: right;
+        margin-right: 10px
+    }
+
+    .sidebar ul li a {
+        display: grid;
+        color: #5d606a;
+        text-overflow: ellipsis;
+        width: 100%;
+        text-decoration: none
+    }
+
+    .my_foot {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        position: absolute;
+        bottom: 0
+    }
+
+    .my_foot a {
+        text-decoration: none;
+        margin-right: 10px;
+        display: inline-block
+    }
+
+    .my_foot a img {
+        width: 30px;
+        height: 30px
+    }
+</style>
+
+<script>
+    $( function () {
+	$( '.h-right-close>svg' )
+		.click( function () {
+			$( '.sidebar' )
+				.animate( {
+					right: "0"
+				}, 500 );
+			$( '.shelter' )
+				.fadeIn( "slow" )
+		} );
+	$( '.shelter' )
+		.click( function ( e ) {
+			$( '.sidebar' )
+				.animate( {
+					right: "-100%"
+				}, 500 );
+			$( '.shelter' )
+				.fadeOut( "slow" )
+		} )
+} )
+
+</script>
+<div class="post">
+    <div class="post-header-background post-header-img"
+    style="background: url('https://api.ixiaowai.cn/gqapi/gqapi.php')" 
+>
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+            
+            <li><a href="/tags/前端">前端</a></li>
+            
+            <li><a href="/tags/css">css</a></li>
+            
+            
+        </ul>
+        
+        <h1>CSS transform</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                <span class="post-header-info-author-text"> <a href="../../about">whenever</a></span>
+                <div class="post-header-info-author-categories">
+                    
+                         <a href="../../categories/前端/" target="_blank" >前端</a>
+                    
+                </div>
+                <p>2024-01-12 14:34:59</p>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
+
+    <p>html+css</p>
+<h3 id="css伪元素"><a href="#css伪元素" class="headerlink" title="css伪元素"></a>css伪元素</h3><p>CSS中的伪元素是用来选择元素的特定部分或位置，而不是整个元素。它们使用双冒号（::）表示，与伪类（pseudo-class）区别开来，伪类使用单冒号（:）。伪元素允许你通过CSS选择和样式化元素的特定部分，如元素的第一行、第一字母、或者生成的内容。<br>以下是一些常见的CSS伪元素以及它们的主要用途：</p>
+<ol>
+<li><code>**::before**</code> 和<code>**::after**</code>： 这两个伪元素用于在元素的内容前面和后面插入生成的内容。它们经常用于添加装饰性的元素或图标。</li>
+</ol>
+<pre><code class="css">.quote::before &#123;
+  content: &#39;\201C&#39;; /* 左引号 */
+&#125;
+
+.quote::after &#123;
+  content: &#39;\201D&#39;; /* 右引号 */
+&#125;
+</code></pre>
+<ol>
+<li><code>**::first-line**</code> 和 <code>**::first-letter**</code>： 用于选择元素的第一行和第一字母，可用于样式化首行或首字母的样式。</li>
+</ol>
+<pre><code class="css">p::first-line &#123;
+  font-weight: bold;
+&#125;
+
+p::first-letter &#123;
+  font-size: 150%;
+  color: #ff0000;
+&#125;
+</code></pre>
+<ol>
+<li><code>**::selection**</code><strong>：</strong> 用于选择用户选中的文本部分，可以为选中文本应用特定的样式。</li>
+</ol>
+<pre><code class="css">::selection &#123;
+  background-color: #ffee00;
+  color: #000;
+&#125;
+</code></pre>
+<ol>
+<li><code>**::placeholder**</code><strong>：</strong> 用于选择表单元素的占位符文本，可以样式化占位符文本的样式。</li>
+</ol>
+<pre><code class="css">input::placeholder &#123;
+  color: #999;
+  font-style: italic;
+&#125;
+</code></pre>
+<ol>
+<li><code>**::marker**</code><strong>：</strong> 用于样式化列表项的标记部分（如</li><li>元素中的圆点或数字）。</li>
+</ol>
+<pre><code class="css">li::marker &#123;
+  color: #ff0000;
+  font-weight: bold;
+&#125;
+</code></pre>
+<p>这些是一些常见的伪元素，它们允许开发者更精细地控制和样式化文档的不同部分。使用伪元素可以增强页面的设计和交互效果。</p>
+<h3 id="1-字体图标"><a href="#1-字体图标" class="headerlink" title="1 字体图标"></a>1 字体图标</h3><p>引入图标：<br>IconFont网站：<a target="_blank" rel="noopener" href="https://www.iconfont.cn/">iconfont-阿里巴巴矢量图标库</a><br>选择想要的图标，加入库，然后下载项目，选择Font class<br><img src="https://cdn.nlark.com/yuque/0/2024/png/42369922/1704872553125-23a7f55a-ed3d-4ab8-850d-c1ac71fb18ca.png#averageHue=%23fcfbfa&clientId=u5fd2ab89-cedb-4&from=paste&id=u50de71c0&originHeight=436&originWidth=991&originalType=url&ratio=1&rotation=0&showTitle=false&status=done&style=none&taskId=u846e2688-af2c-4b5d-8de4-25a45c73be5&title="><br>如果库中没有需要的图标，可以在IconFont上传矢量图（.svg），然后下载字体图标</p>
+<pre><code class="html">&lt;link rel=&quot;stylesheet&quot; href=&quot;path/to/iconfont.css&quot;&gt;
+&lt;!-- 显示图标 --&gt;
+&lt;span class=&quot;iconfont icon-jushoucang&quot;&gt;&lt;/span&gt;
+&lt;!-- 或者 --&gt;
+&lt;i class=&quot;iconfont icon-jushoucang&quot;&gt;&lt;/i&gt;
+</code></pre>
+<p>去除ul，li中一些多余的格式</p>
+<pre><code class="html">&lt;style&gt;
+  *&#123;
+    magin: 0;
+    padding: 0;
+  &#125;
+  li&#123;
+    list-style: none;
+  &#125;
+  a&#123;
+    color: #333;
+    text-decoration: none;
+  &#125;
+&lt;/style&gt;
+</code></pre>
+<h3 id="2-平面转换"><a href="#2-平面转换" class="headerlink" title="2 平面转换"></a>2 平面转换</h3><p>使用transform实现元素的平移旋转缩放等效果</p>
+<ol>
+<li>位移效果-translate语法：<br>transform: translate(水平移动距离, 垂直移动距离);取值（正负均可）像素值单位数值百分比（参照物为元素自身尺寸）注意：x轴正向为右，y轴正向为下如果需要过渡的效果，可以加上transition: all 0.5s;单方向位移如果translate只有一个参数，则默认为水平方向移动的距离单独设置某个方向移动的距离：translateX()或translateY()位移-绝对定位居中目标：使用translate快速实现绝对定位的元素居中效果positon: absolute;left: 50%；top: 50%;transform: translate(-50%, -50%)；</li>
+<li>旋转效果语法：<br>transform: rotate(角度);取值：角度一般为xxx deg技巧：取值正负都可，正为顺时针，负为逆时针旋转-转换原点（旋转中心）默认：盒子中心点语法： transform-origin: 原点水平位置 原点垂直位置;取值：方位（如left, right, top, bottom, center)，像素单位数值，百分比等。<br>transform多重转换 <br>复合属性transform: translate() rotate();</li>
+<li>缩放效果使用scale改变元素的缩放效果语法：transform: scale(x轴缩放倍数, y轴缩放倍数);技巧：一般情况下，只为缩放设置一个值，表示x轴和y轴等比例缩放transform: scale(缩放倍数)scale值大于1表示放大，scale值小于1表示缩小如果想要超出的部分隐藏，可以用overflow: hidden;</li>
+<li>渐变效果（多个颜色逐渐改变，一般用于设置盒子的背景 ）例如背景颜色竖直方向渐变：background-color: linear-gradient(颜色1, 颜色2, …);如果想要半透明渐变：background-color: linear-gradient(transparent, 颜色2, …);</li>
+</ol>
+<h3 id="3-空间转换"><a href="#3-空间转换" class="headerlink" title="3 空间转换"></a>3 空间转换</h3><p>目标：使用transform属性实现元素在空间内的位移，旋转和缩放等效果</p>
+<ol>
+<li>空间位移语法：transform: translate3d(x, y, z);<ul>
+<li>transform: translateX();</li>
+<li>transform: translateY();</li>
+<li>transform: translateZ();</li>
+</ul>
+</li>
+<li>取值：（正负均可）像素单位数值，百分比透视：使用perspective实现透视效果属性（添加给父级）perspective: 值，取值为像素单位数值，一般在800-1200</li>
+<li>空间旋转语法：<ul>
+<li>transform: rotateX(值)，沿着x轴转</li>
+<li>transform: rotateY(值)，沿着y轴转</li>
+<li>transform: rotateZ(值)，沿着z轴转，其实与平面旋转相同</li>
+</ul>
+</li>
+<li>该空间旋转效果也可结合透视属性使用，会更加真实拓展：rotate3d(x, y, z, 角度): 用来自定义旋转轴的位置及旋转的角度。</li>
+<li>立体呈现语法：transform-style: perserve-3d;</li>
+<li>缩放语法：transform: scale3d(值);</li>
+</ol>
+<h3 id="4-动画"><a href="#4-动画" class="headerlink" title="4 动画"></a>4 动画</h3><p>目标：使用animation添加动画效果<br>实现步骤：<br>1.定义动画</p>
+<pre><code class="css">@keyframes 动画名称&#123;
+  from&#123;&#125;
+  to&#123;]
+  &#125;
+
+  @keyframes 动画名称&#123;
+    0%&#123;&#125;
+    10%&#123;&#125;
+    15%&#123;&#125;
+    100%&#123;&#125;
+  &#125;
+</code></pre>
+<p>2.使用动画<br>animation: 动画名称 动画花费时长;<br>复合属性：<br>animation: 动画名称 动画时长 速度曲线 延迟时间 重复次数 动画方向 执行完毕时状态; - 动画名称 动画时长 必须要有 - 取值不分先后 - 如果有两个时间，第一个表示动画时长，第二个表示延迟时间</p>
+
+  </div>
+  <div id="gitalk-container"></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2024/01/12/MVVM%E6%9E%B6%E6%9E%84%E5%92%8Cvue3/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>MVVM架构和vue3</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2024/01/12/JS%E4%B8%AD%E7%9A%84%E9%87%8D%E8%A6%81%E6%A6%82%E5%BF%B5/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>JS中的重要概念</p>
+        </div>
+    </a>
+    
+</div>
+</div>
+		<div class="footer">
+	<div class="Copyright">
+		©2024 主题：<a
+				style="text-decoration: none;display: contents; color: #898F9F;">Quiet</a>
+	</div>
+	<div class="contact">
+		
+			<a target="_blank" rel="noopener" href="https://github.com/wheneverr">
+				<img src="https://cdn.jsdelivr.net/gh/duogongneng/MyBlogImg/imggithub.png" alt="Quiet主题">
+			</a>
+			
+	</div>
+</div>
+
+<script src="/js/gotop.js"></script>
+
+
+<style type="text/css">
+    @media screen and (min-width: 600px) {
+        .goTop>span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            opacity: 0.8;
+            background: rgba(18, 24, 58, 0.06);
+            text-align: center;
+            transition: border .5s;
+            border: 1px solid rgba(18, 24, 58, 0.06);
+
+            -moz-transition: border .5s;
+            /* Firefox 4 */
+            -webkit-transition: border .5s;
+            /* Safari 和 Chrome */
+            -o-transition: border .5s;
+            /* Opera */
+        }
+
+        .goTop>span:hover {
+            border: 1px solid #6680B3;
+        }
+
+
+        .goTop {
+            position: fixed;
+            right: 30px;
+            bottom: 80px;
+        }
+
+        .goTop>span>svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+
+    }
+
+    @media screen and (max-width: 600px) {
+        .goTop {
+            display: none;
+        }
+    }
+</style>
+<div class="goTop" id="js-go_top">
+    <span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+            <g>
+                <path d="M13 12v8h-2v-8H4l8-8 8 8z"></path>
+            </g>
+        </svg>
+    </span>
+</div>
+<script>
+    $( '#js-go_top' )
+	.gotoTop( {
+		offset: 500,
+		speed: 300,
+		animationShow: {
+			'transform': 'translate(0,0)',
+			'transition': 'transform .5s ease-in-out'
+		},
+		animationHide: {
+			'transform': 'translate(100px,0)',
+			'transition': 'transform .5s ease-in-out'
+		}
+	} );
+</script>
+	
+		
+    <!-- Gitalk -->
+    <script>
+        const data = '{"clientID":"02b3c","clientSecret":"adfc7b4","repo":"gimment","owner":"duneng","admin":"duneng"}'
+        const gitalk = new Gitalk({
+            ...JSON.parse( data),
+            id:location.pathname,
+            distractionFreeMode:false
+        })
+        
+        if(Boolean('true')){
+            gitalk.render('gitalk-container')
+        }
+    </script>
+
+	</body>
+</html>
+
