@@ -603,7 +603,7 @@ hue-6-2: #e6c07b
 }
 .about-content {
   display: flex;
-  max-width: 1160px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 0;
   background: #ffffff;
@@ -640,7 +640,7 @@ hue-6-2: #e6c07b
 }
 .archive-content {
   display: flex;
-  max-width: 1160px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 0;
   background: #ffffff;
@@ -655,7 +655,7 @@ hue-6-2: #e6c07b
 }
 .categories-content {
   display: flex;
-  max-width: 1160px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 0;
   background: #ffffff;
@@ -1066,7 +1066,7 @@ hue-6-2: #e6c07b
 }
 .links-content {
   display: flex;
-  max-width: 1160px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 0;
   background: #ffffff;
@@ -1328,7 +1328,7 @@ hue-6-2: #e6c07b
 }
 .post-content {
   display: flex;
-  max-width: 1160px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 0;
   background: #ffffff;
@@ -1426,7 +1426,7 @@ hue-6-2: #e6c07b
 }
 .tag-content {
   display: flex;
-  max-width: 1160px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 0;
   background: #ffffff;
@@ -1441,7 +1441,7 @@ hue-6-2: #e6c07b
 }
 .tags-content {
   display: flex;
-  max-width: 1160px;
+  max-width: 1000px;
   margin: 0 auto;
   margin-top: 0;
   background: #ffffff;
