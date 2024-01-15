@@ -1,0 +1,216 @@
+<h2 id="登录权限控制"><a href="#登录权限控制" class="headerlink" title="登录权限控制"></a>登录权限控制</h2><ol>
+<li>使用数组定义一个invisible数组，数组中包含着所有无需登录就可以查看的页面路由。在路由守卫中拦截判断。由此做到无需登录的页面可以直接查看(放在invisible数组中)，需要登录的页面则会进行登录等业务判断。</li>
+</ol>
+<pre><code class="javascript">let invisible = [
+  {
+    path: &#39;/login&#39;, //登录页面
+    name: &#39;Login&#39;,
+    component: Login,
+  },
+  {
+    path: &#39;/404&#39;,
+    name: &#39;index-notFount&#39;,
+    component: () =&gt; import(&#39;@/pages/core/NotFount/index&#39;),
+  },
+];
+
+export default invisible;
+</code></pre>
+<p>在路由守卫中拦截：</p>
+<pre><code class="javascript">// 引入无需登录的页面
+import invisible from &#39;./invisible&#39;;
+
+let router = new Router({
+  routes: [
+    ...invisible,
+  ],
+});
+
+const invisibleMap = [];
+invisible.forEach(item =&gt; {
+  if (item.name) {
+    invisibleMap.push(item.name);
+  }
+});
+
+router.beforeEach(async (to, from, next) =&gt; {
+  if (!invisibleMap.includes(to.name)) {
+      // 业务逻辑判断登录等
+  }
+  else {
+    next();
+  }
+})
+</code></pre>
+<ol start="2">
+<li>在路由对象中以添加meta的方式去实现登录页面权限控制，然后在路由守卫进行拦截。</li>
+</ol>
+<pre><code class="javascript">export const routes = [
+    {
+       path: &#39;/login&#39;, //登录页面
+       name: &#39;Login&#39;,
+       component: Login,
+    },
+    {
+       path:&quot;/list&quot;, // 列表页
+       name:&quot;List&quot;,
+       meta:{
+          need_login:true //需要登录
+       }
+    }
+]
+</code></pre>
+<p>路由拦截中：</p>
+<pre><code class="javascript">router.beforeEach((to, from, next) =&gt; {
+  if (to.meta.need_login) {
+    // 业务逻辑判断登录等
+      
+  } else {
+    next();
+  }
+});
+</code></pre>
+<h2 id="角色权限控制"><a href="#角色权限控制" class="headerlink" title="角色权限控制"></a>角色权限控制</h2><p>假设在某个系统当中，存在3个比较普遍性的角色：普通成员、管理员以及超级管理员。普通成员能够浏览系统的 a、b、c 三个模块，但是它不能查看和编辑 d、e 模块(假设只有d、e模块可编辑)。管理员拥有普通会员的所有权限，另外它还能查看 d、e 模块和编辑d模块。超级管理员拥有此系统的所有权限，因此相比于管理员而言，在这就多出一个编辑e模块。</p>
+<pre><code class="javascript">export const permission = {
+   member:[&quot;Home&quot;], //普通成员
+   admin:[&quot;Home&quot; ,&quot;Notify&quot;],  // 管理员
+   super_admin:[&quot;Home&quot; ,&quot;Notify&quot;,&quot;Manage&quot;]  // 超级管理员
+ }
+</code></pre>
+<p>在角色权限这块，其实最好的办法就是交给后端去配置，有哪些角色，账户对应哪些角色这些逻辑应当是后端负责，后端通过登录直接返回该账户所拥有的权限，前端这块无需过度关注角色主要职责应是根据后端的权限返回，展示对应的权限页面和菜单。这样即使碰到上述的修改也能轻便灵巧的解决。<br />后端返回的账户权限结构如下</p>
+<pre><code class="javascript">{
+   &quot;home&quot;: {
+     &quot;id&quot;:&quot;100&quot;,
+     &quot;name&quot;:&quot;home&quot;,
+     &quot;desc&quot;:&quot;首页&quot;,
+     &quot;value&quot;:true,
+     &quot;children&quot;: [],
+   }
+}
+</code></pre>
+<p>在这个权限结构之中，id为页面或者说模块的唯一标识id，name此处最好与前端路由页面对象的name值相对应，desc为菜单上展示的名称，value代表这个模块或者页面是否展示，children数组为此页面的二级页面数组，对于路由的权限控制和菜单的渲染生成都有着重要的影响。<br />在此结构中，前端通过判断 value 来决定这个页面是否有权限展示，children 下为当前页面或者说模块下的二级页面，三级页面等，结构跟 home 应是一样的。如若一级页面value为false，那下面的二级、三级应当都无权展示。<br />此时前端需要做的是递归遍历后端返回的这个结构，当判断value为 false 的时候，把对应到的路由页面给过滤掉。</p>
+<pre><code class="javascript">// 生成过滤路由和菜单的方法  
+function filterRouter(arr, obj, type) {
+  if (Array.isArray(obj)) {
+    // 数组处理
+    obj.forEach(item =&gt; {
+      handleRouterItem(arr, item, type);
+    });
+  } else {
+    // 对象处理
+    for (let item in obj) {
+      handleRouterItem(arr, obj[item], type);
+    }
+  }
+}
+
+// 处理每个元素节点
+function handleRouterItem(arr, item, type) {
+  // 确定这个页面或模块是不展示的
+  if (item.value === false) {
+    if (type === &#39;menu&#39;) {
+      assistance(arr, routerMap[item.name]);
+    } else {
+      assistanceRouter(arr, routerMap[item.name]);
+    }
+  } else if (item.childrens &amp;&amp; item.childrens.length &gt; 0) {
+    filterRouter(arr, item.childrens, type);
+  }
+}
+
+function assistanceRouter(arr, name, obj) {
+  for (let i = 0; i &lt; arr.length; i++) {
+    if (arr[i].name === name) {
+      // 无权限页面设置meta字段或者直接删除
+      // arr.splice(i, 1);
+      Vue.prototype.$set(arr[i].meta, &#39;hasRoleAuth&#39;, false);
+      return true;
+    } else {
+      if (arr[i].children &amp;&amp; arr[i].children.length &gt; 0) {
+        if (assistanceRouter(arr[i].children, name, arr[i])) {
+          return;
+        }
+      }
+    }
+  }
+}
+
+function assistance(arr, name, obj) {
+  for (let i = 0; i &lt; arr.length; i++) {
+    if (arr[i].name === name) {
+      arr.splice(i, 1);
+      return true;
+    } else {
+      if (arr[i].children &amp;&amp; arr[i].children.length &gt; 0) {
+        if (assistance(arr[i].children, name, arr[i])) {
+          return;
+        }
+      }
+    }
+  }
+}
+
+export const rolePermission = () =&gt; {
+  // router为所有页面的路由结构，roleRouter为后端返回的角色权限对象
+  filterRouter(router, roleRouter);
+  router.addRoutes(router);
+}
+</code></pre>
+<p>在上述代码中，router为前端的路由对象数组，roleRouter为后端返回的该账号所拥有的角色权限的相应的数据结构。<br />在filterRouter函数中，遍历roleRouter数据结构中的每一项，把每一项的处理逻辑交给handleRouterItem。<br />在handleRouterItem函数中，判断每一项的value字段是否为false，如若为false，则说明这个模块或者说页面是没有权限展示的。那么则应该交给assistanceRouter和assistance过滤掉该模块或者页面。<br />在assistanceRouter和assistance函数中，它俩的主要作用则是在数组路由对象中找到name值和参数name一致的路由对象，在assistanceRouter函数中则是在meta对象中用hasRoleAuth字段做以标记，代表无权访问用以路由权限也可以和assistance函数一样做过滤处理。在assistance中则是把无权限的页面过滤用于菜单生成。<br />以上的这种方式是通过递归遍历后端的权限字段，将已有的路由结构给过滤一遍，从而生成对应权限的路由结构和菜单的一种方式。<br />这样就实现了用户只能按照他对应的权限列表里的权限规则访问及菜单看到相应的页面。<br />动态添加路由rolePermission这部分代码最好单独封装起来，因为用户登录和刷新页面时都需要调用。</p>
+<h3 id="为什么不在前端定义所有角色可见的页面？"><a href="#为什么不在前端定义所有角色可见的页面？" class="headerlink" title="为什么不在前端定义所有角色可见的页面？"></a>为什么不在前端定义所有角色可见的页面？</h3><p>如果以前端为主导，那么后端则应是在登录接口返回当前账户所属哪些角色。拿到该账号的角色后后就去上面的配置文件里取出该角色所能访问的页面权限，随后将这部分页面权限加载到系统中从而达到权限控制的目的(需要注意的是，数组里面的值应和对应页面的路由名称相匹配)。<br />在上述设计中，后端只负责给账户标识对应角色，并且写入库中，在登录时返回给前端此账户对应的角色。到了这一步，可能会有同学存在疑问，这样不是也挺好的吗，前端不也可以控制角色权限嘛。别急，那现在来思考一个问题：<br />如果对一个已上线的系统项目，现需要紧急新增一个角色比如x，那么前端就要急需修改配置文件(配置文件如上图)，此时还不够，还需把之前的y用户移动到x角色下，那么此时不光是前端要改配置文件，后端也需要在库中把y用户移动到x角色下。这样的改动显得非常容易出错且复杂。</p>
+<h2 id="退出及切换用户"><a href="#退出及切换用户" class="headerlink" title="退出及切换用户"></a>退出及切换用户</h2><p>在引入角色权限的系统之中，退出及切换用户也是相当重要的。因为不同账号的权限往往不同。因此要格外注意退出及切换账号的时候不能带着上一个账户的权限信息，不然会引发严重的漏洞。<br />当用户退出后，初始化相关路由实例，代码如下：</p>
+<pre><code class="javascript">import Router from &#39;vue-router&#39;;
+import router from &#39;@/router&#39;;
+import store from &#39;@/store/index.js&#39;;
+import invisible from &#39;@/router/invisible&#39;;
+
+export const resetRouter = () =&gt; {
+  let newRouter = new Router({
+    routes: [...invisible],
+  });
+  router.matcher = newRouter.matcher;
+  store.commit(&#39;CLEAR_ROLE_AUTH&#39;);
+};
+</code></pre>
+<p>初始化当前账户的动态路由，并且将vuex中的当前角色的权限信息也一并给清除掉。</p>
+<h2 id="内容权限控制"><a href="#内容权限控制" class="headerlink" title="内容权限控制"></a>内容权限控制</h2><p>在上一part的角色权限中，它做到了让不同账户访问不同的页面，但是往往有时候需要更细腻的去控制页面中的某个元素，如增删改一一对应了一个按钮，这个时候，就需要针对页面的内容，做出内容权限控制。<br />在本文中，就简单的以增删改作为内容权限控制内容。<br />沟通后，现在后端的返回结构应该是这样：</p>
+<pre><code class="json">{
+   &quot;home&quot;: {
+     &quot;id&quot;:&quot;100&quot;,
+     &quot;name&quot;:&quot;home&quot;,
+     &quot;desc&quot;:&quot;首页&quot;,
+     &quot;value&quot;:true,
+     &quot;children&quot;: [],
+     &quot;options&quot;: {
+      &quot;create&quot;: true,
+        &quot;delete&quot;: true,
+        &quot;update&quot;: true,
+     }
+   }
+ }
+</code></pre>
+<p>在当前这个结构中，home首页存在三个内容权限控制，分别为创建、删除、更新(如需新增，可在与后端沟通好字段后加在options内)。<br />在拿到这样的数据结构后，我们还需设计一个方案，让这个权限结构和页面内容相关联起来，在这，我们用到了指令。我们创建一个全局的自定义指令 permission，伪代码如下：</p>
+<pre><code class="javascript">import router from &#39;@/router&#39;;
+import store from &#39;@/store&#39;;
+
+app.directive(&#39;permission&#39;, {
+  mounted(el, binding, vnode) {
+    const permission = binding.value; // 获取指令值
+    const current_page = router.currentRoute.value.name; // 获取当前路由名称
+    const options = getOptions(current_page) // getOptions方法为拿到路由名称对应的角色权限对象
+    if (!options[permission]) {
+      el.parentElement.removeChild(el); // 没有该内容权限
+    }
+  },
+});
+</code></pre>
+<p>在上述代码中，首先拿到指令值，再获取到当前路由名称，通过getOptions方法拿到该路由名称对应的角色权限数据结构中的相关对象，进而判断options内是否有该内容权限，如若没有，则将该dom移除。<br />在html中，指令的用法如下：</p>
+<pre><code class="xml">&lt;template&gt;
+    &lt;div&gt;
+      &lt;button v-permission=&quot;&#39;create&#39;&quot;&gt;创建&lt;/button&gt;  
+   &lt;button v-permission=&quot;&#39;update&#39;&quot;&gt;修改&lt;/button&gt;
+      &lt;button v-permission=&quot;&#39;delete&#39;&quot;&gt;删除&lt;/button&gt;
+    &lt;/div&gt;
+&lt;/template&gt;
+</code></pre>
+<p>简而言之，就是将角色权限的相关数据结构与dom相关通过指令绑定起来。</p>
