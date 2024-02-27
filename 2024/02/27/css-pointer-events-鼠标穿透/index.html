@@ -3,7 +3,7 @@
 
 <head>
 	
-<title>标签:MySQL-whenever</title>
+<title>css pointer-events 鼠标穿透-whenever</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,8 +12,9 @@
 <link rel="stylesheet" href="/css/index.css">
 
 
-<meta name="keywords" content="Whenever的空间">
-<meta name="description" content="描述">
+
+<meta name="keywords" content="前端,">
+<meta name="description" content="">
 
 
 <script src="/js/jquery.min.js"></script>
@@ -42,8 +43,7 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
-	
-<div class="header">
+	<div class="header">
 
 	<div class="header-top" id="header-top">
 		<div class="h-left">
@@ -86,13 +86,13 @@
 							
 								
 					
-						<li class="select">
-							<a href="/tags">
-								标签
-							</a>
-							<span class="dot"></span>
-						</li>
-						
+							<li>
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
 								
 					
 							<li>
@@ -271,43 +271,209 @@
 } )
 
 </script>
+<div class="post">
+    <div class="post-header-background post-header-img" style="background: url('/image/01.jpg') no-repeat center center;
+    background-size: cover;
+        background-attachment: fixed;">
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+                
+                    <li><a href="/tags/前端">
+                            前端
+                        </a></li>
+                    
+                        
+        </ul>
 
-
-
-<div class="tag">
-    <div class="header-body-background">
-    <div class="header-body-background-content">
-        <span>
-            <img src="/image/tags.png" alt="Quiet">
-        </span>
-
-        <h2>文章标签：MySQL</h2>
-    </div>
-</div>
-    <div class="tag-content" id="content">
-        <div class="tag-content-data">
-            <div class="grouping">
-    
-        <p>
-            2024
-        </p>
-        
-        <a href="/2024/02/27/MySQL主从复制/">
-            <span>MySQL主从复制</span>
-            <time>02-27</time>
-        </a>
-        
-        <a href="/2024/01/11/MySQL基本操作命令/">
-            <span>MySQL基本操作命令</span>
-            <time>01-11</time>
-        </a>
-        
-        
-</div>
+        <h1>css pointer-events 鼠标穿透</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                            <span class="post-header-info-author-text"> <a
+                                    href="../../about">whenever</a></span>
+                            <div class="post-header-info-author-categories">
+                                
+                                    <a href="../../categories/前端/" target="_blank">前端</a>
+                                    
+                            </div>
+                            <p>2024-02-27 16:20:39</p>
+            </div>
         </div>
     </div>
 </div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
 
+    <p>前端开发中，难免会遇到一些元素被其他元素遮挡，比如想要点击box2，刚好又被box1元素挡住，无法实现点击效果</p>
+<pre><code class="html">&lt;style&gt;
+  .box1 &#123;
+    position: absolute;
+    top: 0;
+    width: 270px;
+    line-height: 270px;
+    z-index: 1;
+    background-color: rgba(255, 194, 204, 0.5);
+  &#125;
+  .box2 &#123;
+    position: absolute;
+    top: 0;
+    width: 100px;
+    line-height: 100px;
+    background: skyblue;
+  &#125;
+&lt;/style&gt;
+&lt;!-- box1将box2完全遮挡住，但是点击事件又是在box2上面 --&gt;
+&lt;div class=&quot;box1&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;box2&quot; onclick=&quot;abc()&quot;&gt;&lt;/div&gt;
+
+&lt;script&gt;
+  function abc() &#123;
+    console.log(&#39;box2点击事件&#39;);
+  &#125;
+&lt;/script&gt;
+</code></pre>
+<p>这时候，就可以使用该属性了：<strong>pointer-events</strong>，鼠标是否可以穿透当前元素，抵达被覆盖的元素</p>
+<table>
+<thead>
+<tr>
+<th><strong>默认值</strong></th>
+<th><strong>描述</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>auto</td>
+<td>鼠标可以点击访问该元素，默认值</td>
+</tr>
+<tr>
+<td>none</td>
+<td>鼠标点击，该元素不做任何响应</td>
+</tr>
+<tr>
+<td>inherit</td>
+<td>继承父级属性</td>
+</tr>
+</tbody></table>
+<p>给box1加上<strong>pointer-events: none; <strong>这样box2就不会收到box1的遮挡，也能发生鼠标点击事件了</strong>。</strong></p>
+<pre><code class="html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+    &lt;meta charset=&quot;UTF-8&quot;&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+    &lt;title&gt;Document&lt;/title&gt;
+    &lt;style&gt;
+        .box1 &#123;
+            position: absolute;
+            top: 0;
+            width: 270px;
+            line-height: 270px;
+            z-index: 1;
+            pointer-events: none;
+            background-color: rgba(255, 194, 204, 0.5);
+        &#125;
+        .box2 &#123;
+            position: absolute;
+            top: 0;
+            width: 100px;
+            line-height: 100px;
+            background: skyblue;
+        &#125;
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- box1将box2完全遮挡住，但是点击事件又是在box2上面 --&gt;
+    &lt;div class=&quot;box1&quot;&gt;box1&lt;/div&gt;
+    &lt;div class=&quot;box2&quot; onclick=&quot;abc()&quot;&gt;box2&lt;/div&gt;
+
+    &lt;script&gt;
+        function abc() &#123;
+            console.log(&#39;box2点击事件&#39;);
+        &#125;
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>如果一个鼠标点击事件不能发生，首先应检查它是否被遮挡，然后可以使用pointer-events属性。然后检查是否有其它的事件冲突，比如mousedown等。<br>在子元素中，<strong>绑定一个阻止冒泡的点击事件</strong> <code>@click.stop</code>，可以解决点击子元素触发父元素点击事件的问题。</p>
+
+  </div>
+  <div id="gitalk-container"></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+
+    
+    <a href="/2024/02/27/Nginx/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>Nginx</p>
+        </div>
+    </a>
+    
+</div>
+</div>
 	<div class="footer">
 	<div class="Copyright">
 		©2024 主题：<a
@@ -422,7 +588,7 @@
             distractionFreeMode:false
         })
         
-        if(Boolean('')){
+        if(Boolean('true')){
             gitalk.render('gitalk-container')
         }
     </script>

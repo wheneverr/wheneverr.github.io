@@ -3,7 +3,7 @@
 
 <head>
 	
-<title>标签:MySQL-whenever</title>
+<title>防抖和节流-whenever</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,8 +12,9 @@
 <link rel="stylesheet" href="/css/index.css">
 
 
-<meta name="keywords" content="Whenever的空间">
-<meta name="description" content="描述">
+
+<meta name="keywords" content="前端,">
+<meta name="description" content="">
 
 
 <script src="/js/jquery.min.js"></script>
@@ -42,8 +43,7 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 
 <body>
-	
-<div class="header">
+	<div class="header">
 
 	<div class="header-top" id="header-top">
 		<div class="h-left">
@@ -86,13 +86,13 @@
 							
 								
 					
-						<li class="select">
-							<a href="/tags">
-								标签
-							</a>
-							<span class="dot"></span>
-						</li>
-						
+							<li>
+								<a href="/tags">
+									标签
+								</a>
+								<span class="dot"></span>
+							</li>
+							
 								
 					
 							<li>
@@ -271,43 +271,199 @@
 } )
 
 </script>
+<div class="post">
+    <div class="post-header-background post-header-img" style="background: url('/image/01.jpg') no-repeat center center;
+    background-size: cover;
+        background-attachment: fixed;">
+    <div class="post-header-background-content">
+        <ul class="post-header-tag">
+            
+                
+                    <li><a href="/tags/前端">
+                            前端
+                        </a></li>
+                    
+                        
+        </ul>
 
-
-
-<div class="tag">
-    <div class="header-body-background">
-    <div class="header-body-background-content">
-        <span>
-            <img src="/image/tags.png" alt="Quiet">
-        </span>
-
-        <h2>文章标签：MySQL</h2>
-    </div>
-</div>
-    <div class="tag-content" id="content">
-        <div class="tag-content-data">
-            <div class="grouping">
-    
-        <p>
-            2024
-        </p>
-        
-        <a href="/2024/02/27/MySQL主从复制/">
-            <span>MySQL主从复制</span>
-            <time>02-27</time>
-        </a>
-        
-        <a href="/2024/01/11/MySQL基本操作命令/">
-            <span>MySQL基本操作命令</span>
-            <time>01-11</time>
-        </a>
-        
-        
-</div>
+        <h1>防抖和节流</h1>
+        <div class="post-header-info">
+            <div class="post-header-info-author">
+                
+                    <svg t="1604839279282" class="icon" viewBox="0 0 1024 1024" version="1.1"
+                        xmlns="http://www.w3.org/2000/svg" p-id="2901" width="20" height="20">
+                        <path
+                            d="M513 956.3c-247.7 0-448-200.3-448-448S265.3 66.2 513 66.2s448 200.3 448 448-200.3 442.1-448 442.1z m0-830.9c-212.2 0-388.8 170.7-388.8 388.8C124.2 726.3 294.9 903 513 903c212.2 0 388.8-170.7 388.8-388.8S725.2 125.4 513 125.4z m0 430.2c-94.2 0-170.7-76.5-170.7-170.7S418.8 207.8 513 207.8s170.7 76.5 170.7 170.7S607.2 555.6 513 555.6z m0-289.1c-64.6 0-112 52.8-112 112s47.4 117.9 112 117.9 112-52.8 112-112-47.4-117.9-112-117.9z m0 689.8c-135.7 0-259-58.7-341.9-158.9l-11.8-17.8 11.8-17.8c76.5-117.9 206.2-188.5 347.8-188.5 135.7 0 265 64.6 341.9 182.6l11.8 17.8-11.8 17.8C778 897.1 648.7 956.3 513 956.3zM230.3 773.2C300.9 849.7 406.9 897 513 897c112 0 218.1-47.4 288.6-129.8-70.5-88.2-170.7-135.6-282.7-135.6s-218.1 53.3-288.6 141.6z"
+                            p-id="2902" fill="#ffffff"></path>
+                    </svg>
+                    
+                            <span class="post-header-info-author-text"> <a
+                                    href="../../about">whenever</a></span>
+                            <div class="post-header-info-author-categories">
+                                
+                                    <a href="../../categories/前端/" target="_blank">前端</a>
+                                    
+                            </div>
+                            <p>2024-02-27 16:08:12</p>
+            </div>
         </div>
     </div>
 </div>
+    <div class="post-content" id="content">
+  
+  <div id="article" class="post-content-info">
+    
 
+    <p><a name="xLkmc"></a></p>
+<h2 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h2><p><a name="vCNnO"></a></p>
+<h3 id="什么是防抖？"><a href="#什么是防抖？" class="headerlink" title="什么是防抖？"></a>什么是防抖？</h3><p>防抖(debounce)：触发高频事件后 n 秒内函数只会执行一次，如果 n 秒内高频事件再次被触发，则重新计算时间<br><a name="cl6xm"></a></p>
+<h3 id="如何实现防抖"><a href="#如何实现防抖" class="headerlink" title="如何实现防抖"></a>如何实现防抖</h3><pre><code class="javascript">/**
+ * 非立即执行防抖函数
+ * @param &#123;Function&#125; func 
+ * @param &#123;number&#125; delay 
+ * @returns 
+ */
+function debounce(func, delay) &#123;
+   let timeout
+   return function () &#123;
+       const _this = this
+       const args = [...arguments]
+       if (timeout) &#123;
+           clearTimeout(timeout) // 如果之前计时器还存在则清除
+       &#125;
+       timeout = setTimeout(() =&gt; &#123;
+           func.apply(_this, args)
+       &#125;, delay)
+   &#125;
+&#125;
+</code></pre>
+<p><a name="JHE2c"></a></p>
+<h2 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h2><p><a name="t7XKu"></a></p>
+<h3 id="什么是节流？"><a href="#什么是节流？" class="headerlink" title="什么是节流？"></a>什么是节流？</h3><p>节流(thorttle)：高频事件触发，但在 n 秒内只会执行一次，所以节流会稀释函数的执行频率<br><a name="iV8VS"></a></p>
+<h3 id="如何实现节流"><a href="#如何实现节流" class="headerlink" title="如何实现节流"></a>如何实现节流</h3><ol>
+<li>使用时间戳实现</li>
+</ol>
+<ul>
+<li>时间戳版的功能函数触发是在时间段内开始的时候</li>
+</ul>
+<pre><code class="javascript">function throttle(func, wait) &#123;
+    var previous = 0;
+    return function() &#123;
+        let now = Date.now();
+        let context = this;
+        let args = arguments;
+        if (now - previous &gt; wait) &#123;
+            func.apply(context, args);
+            previous = now;
+        &#125;
+    &#125;
+&#125;
+content.onmousemove = throttle(count,1000);
+</code></pre>
+<ol start="2">
+<li>使用计时器实现：</li>
+</ol>
+<ul>
+<li>第一次调用节流函数，还没有定时器，创建一个定时器，并在时间间隔结束时触发功能函数</li>
+</ul>
+<pre><code class="javascript">function throttle(func, wait) &#123;
+     let timeout;
+     return function() &#123;
+         let context = this;
+         let args = arguments;
+         if (!timeout) &#123;
+             timeout = setTimeout(() =&gt; &#123;
+                 timeout = null;
+                 func.apply(context, args)
+             &#125;, wait)
+         &#125;
+ 
+     &#125;
+&#125;
+</code></pre>
+<p><a name="v5Dca"></a></p>
+<h2 id="为什么要防抖和节流？"><a href="#为什么要防抖和节流？" class="headerlink" title="为什么要防抖和节流？"></a>为什么要防抖和节流？</h2><ul>
+<li>当函数绑定一些持续触发的事件如：resize、scroll、mousemove ，多次快速click等等，</li>
+<li>如果每次触发都要执行一次函数，会带来性能下降，资源请求太频繁等问题</li>
+</ul>
+
+  </div>
+  <div id="gitalk-container"></div>
+</div>
+
+<script>
+  
+Fancybox.bind('[data-fancybox="fancybox-gallery-img"]', {
+  dragToClose: true,
+  Toolbar: true,
+  closeButton: "top",
+  Image: {
+    zoom: true,
+  },
+  on: {
+    initCarousel: (fancybox) => {
+      const slide = fancybox.Carousel.slides[fancybox.Carousel.page];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+    "Carousel.change": (fancybox, carousel, to, from) => {
+      const slide = carousel.slides[to];
+      fancybox.$container.style.setProperty(
+        "--bg-image",
+        `url("${slide.$thumb.src}")`
+      );
+    },
+  },
+});
+</script>
+
+<style>
+    #noneimg img {
+        display: none;
+        z-index: 9999;
+        /* width: 600px !important; */
+        min-width: 0%;
+        max-width: 90%;
+        max-height: 80%;
+        border-radius: 0px;
+        position: fixed;
+        box-shadow: 0 0 0px #c3c3c300 !important;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto !important;
+    }
+
+    @media screen and (max-width:600px) {
+        #noneimg img {
+            max-width: 88%
+        }
+    }
+</style>
+
+    <div class="post-paging">
+    
+    <a href="/2024/02/27/localStorage-sessionStorage-cookie%E7%9A%84%E5%8C%BA%E5%88%AB/">
+        <div class="post-paging-last">
+            <span>上一篇</span>
+            <p>localStorage,sessionStorage,cookie的区别</p>
+        </div>
+    </a>
+    
+
+    
+    <a href="/2024/01/15/%E5%89%8D%E7%AB%AF%E6%9D%83%E9%99%90%E7%AE%A1%E7%90%86/">
+        <div class="post-paging-next">
+            <span>下一篇</span>
+            <p>前端权限管理</p>
+        </div>
+    </a>
+    
+</div>
+</div>
 	<div class="footer">
 	<div class="Copyright">
 		©2024 主题：<a
@@ -422,7 +578,7 @@
             distractionFreeMode:false
         })
         
-        if(Boolean('')){
+        if(Boolean('true')){
             gitalk.render('gitalk-container')
         }
     </script>
